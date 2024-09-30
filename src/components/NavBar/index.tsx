@@ -69,8 +69,8 @@ export const NavBar = () => {
   }
 
   return (
-    <aside className="bg-[#0b0b0c] border-r-zinc-700 p-4">
-      <div className="flex content-center gap-2 justify-center items-center">
+    <aside className="bg-[#0b0b0c] border-r-zinc-700 p-2">
+      <div className="flex content-center gap-2 justify-center items-center mt-3">
         <Select onValueChange={(e) => ApigetPagesOfUser(e)}>
           <SelectTrigger className="w-[180px] text-zinc-400 overflow-hidden">
             <SelectValue placeholder="Select a user" className="overflow-hidden" />
@@ -101,8 +101,8 @@ export const NavBar = () => {
       </div>
 
       {pages.length > 0 && (
-        <Command className="rounded-lg shadow-md mt-4">
-          <CommandInput placeholder="Type a command or search..." />
+        <Command className="rounded-lg shadow-md mt-3">
+          {/* <CommandInput placeholder="Type a command or search..." /> */}
           <CommandList>
             {/* <CommandEmpty>No results found.</CommandEmpty> */}
             <CommandGroup heading="Pages">
@@ -114,7 +114,7 @@ export const NavBar = () => {
                     console.log(description)
                   }}
                 >
-                  <CommandItem>
+                  <CommandItem className="cursor-pointer ml-2">
                     <FaceIcon className="mr-2 h-4 w-4" />
                     <span>{name.split(' ')[0]}</span>
                   </CommandItem>
