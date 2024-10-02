@@ -21,8 +21,8 @@ import { EditorProps } from '@tiptap/pm/view'
 interface EditorInstance {
   editor: {
     getHTML: () => string
-    getJSON: () => Record<string, any>
-    getText: () => string
+    getJSON?: () => Record<string, any>
+    getText?: () => string
   }
 }
 
