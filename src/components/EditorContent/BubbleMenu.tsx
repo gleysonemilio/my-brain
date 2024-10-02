@@ -4,9 +4,12 @@ import {
   FontItalicIcon,
   UnderlineIcon,
   StrikethroughIcon,
-  CodeIcon
+  CodeIcon,
+  TextIcon,
+  LetterCaseCapitalizeIcon
 } from '@radix-ui/react-icons'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { Paintbrush } from 'lucide-react'
 
 interface BubbleMenuComponents {
   editor: any
@@ -14,6 +17,12 @@ interface BubbleMenuComponents {
 
 export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
   const toggleGroupItems = [
+    {
+      value: 'paragraph',
+      ariaLabel: 'Toggle code block',
+      onClick: () => editor.chain().focus().setParagraph().run(),
+      Icon: <TextIcon className="h-4 w-4" />
+    },
     {
       value: 'bold',
       ariaLabel: 'Toggle bold',
@@ -57,11 +66,11 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
 
   return (
     <BubbleMenu
-      className=" bg-zinc-950 rounded-md p-1"
+      className=" bg-zinc-950 rounded-md"
       editor={editor}
       tippyOptions={{ duration: 100 }}
     >
-      <ToggleGroup type="multiple">
+      <ToggleGroup type="multiple" className="gap-0 p-1">
         {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon }) => (
           <ToggleGroupItem value={value} aria-label={ariaLabel} onClick={onClick}>
             {Icon}
@@ -80,7 +89,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
                 : editor.chain().focus().setColor(color).run()
             }
           >
-            <div className={`h-5 w-5 bg-[${color}] rounded-xl`} />
+            <Paintbrush color={color} size={16} />
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
