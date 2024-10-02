@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { BubbleMenuComponents } from './BubbleMenu'
@@ -16,13 +16,21 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { EditorProps } from '@tiptap/pm/view'
 
 const Tiptap = () => {
   const { inforPage } = useAppContext()
   const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
-  const editor = useEditor({
+  interface EditorInterface {
+    extensions: string[]
+    content: string
+    editorProps: EditorProps
+    onUpdate: (editor: Editor) => void
+  }
+
+  const editor: any = useEditor({
     extensions: [
       Color,
       StarterKit,

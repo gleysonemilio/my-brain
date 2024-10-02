@@ -1,17 +1,17 @@
 'use client'
 
 import { PagesInterface } from '@/components/NavBar'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, Dispatch, SetStateAction } from 'react'
 
 type AppContextProps = {
-  setInforPage: any
+  setInforPage: Dispatch<SetStateAction<PagesInterface>>
   inforPage: PagesInterface
 }
 
 const AppContext = createContext<AppContextProps>({} as AppContextProps)
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [inforPage, setInforPage] = useState<any>({
+  const [inforPage, setInforPage] = useState<PagesInterface>({
     id: '',
     idUser: '',
     title: '',
