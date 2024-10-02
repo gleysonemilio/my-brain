@@ -1,5 +1,6 @@
 
 
+import { StateCreateNewPageInterface } from '@/components/NavBar'
 import { initializeApp } from 'firebase/app'
 import {
     collection,
@@ -57,6 +58,18 @@ async function createUser(name: string, email: string) {
     })
 }
 
+const createPage = async ({ idUser, title, subtitle }: StateCreateNewPageInterface) => {
+    const page = await addDoc(pageCollectionRef, {
+        content: '<h1>About what are you thinking?🤔 </h1>',
+        idUser: idUser || null,
+        title: title || null,
+        subtitle: subtitle || null
+    })
+
+    return page
+}
+
+
 async function deleterUser(id: string) {
     const userDoc = await doc(db, 'user', id)
     await deleteDoc(userDoc)
@@ -71,9 +84,23 @@ async function updateUser(id: string, name: string, email: string) {
     })
 }
 
+const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: any) => {
+    const page = doc(db, 'page', id)
+
+    await updateDoc(page, {
+        content: content || null,
+        idUser: idUser || null,
+        title: title || null,
+        subtitle: subtitle || null
+    })
+
+    return page
+}
+
+
 // querySnapshot.forEach((doc) => {
 //     console.log(doc.id, " => ", doc.data());
 // });
 
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser }
