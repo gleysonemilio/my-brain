@@ -18,19 +18,29 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { EditorProps } from '@tiptap/pm/view'
 
+interface EditorInstance {
+  editor: {
+    getHTML: () => string
+    getJSON: () => Record<string, any>
+    getText: () => string
+  }
+}
+
+interface EditorOptions {
+  extensions: any[] // Tipar corretamente conforme suas extensões (Color, StarterKit, etc.)
+  content?: string | null // O conteúdo pode ser string ou null
+  editorProps?: {
+    attributes?: Record<string, string> // Tipagem para os atributos do editor
+  }
+  onUpdate?: (editor: EditorInstance) => void // Tipagem para o callback onUpdate
+}
+
 const Tiptap = () => {
   const { inforPage } = useAppContext()
   const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
-  interface EditorInterface {
-    extensions: string[]
-    content: string
-    editorProps: EditorProps
-    onUpdate: (editor: Editor) => void
-  }
-
-  const editor: any = useEditor({
+  const editor = useEditor({
     extensions: [
       Color,
       StarterKit,
@@ -43,13 +53,13 @@ const Tiptap = () => {
     editorProps: {
       attributes: { class: 'outline-none' }
     },
-    onUpdate(editor) {
+    onUpdate(editor: EditorInstance) {
       setNewPage(editor.editor.getHTML())
-      // console.log('getJSON==> ', editor.editor.getJSON())
-      // console.log('getHTML==> ', editor.editor.getHTML())
-      // console.log('getText==> ', editor.editor.getText())
+      // console.log('getJSON==> ', editor.editor.getJSON());
+      // console.log('getHTML==> ', editor.editor.getHTML());
+      // console.log('getText==> ', editor.editor.getText());
     }
-  })
+  } as EditorOptions)
 
   const UpadatePage = async () => {
     await updatePageOfUser({ ...inforPage, id: inforPage.id as string, content: newPage as string })
