@@ -40,6 +40,13 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenu) => {
       subTitle: 'Create a simple bulleted list',
       isActive: 'bulletList',
       ActionButton: () => editor.chain().focus().toggleBulletList().run()
+    },
+    {
+      img: 'https://www.notion.so/images/blocks/bulleted-list.0e87e917.png',
+      title: 'Bulleted list',
+      subTitle: 'Create a simple bulleted list',
+      isActive: 'paragraph',
+      ActionButton: () => editor.chain().focus().setParagraph().run()
     }
   ]
 
