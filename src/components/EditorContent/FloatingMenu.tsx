@@ -61,8 +61,9 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenu) => {
         return currentLineText === '/'
       }}
     >
-      {floatingGoupItem.map(({ title, isActive, subTitle, img, ActionButton }, index) => (
+      {floatingGoupItem.map(({ title, subTitle, img, ActionButton }, index) => (
         <button
+          key={index}
           onClick={() => ActionButton()}
           className="flex items-center gap-2 p-1 min-w-[280px] hover:bg-zinc-800 hover:rounded"
         >

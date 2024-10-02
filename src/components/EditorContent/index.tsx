@@ -1,8 +1,7 @@
 'use client'
 
-import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from '@tiptap/react'
+import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { InitialHtml } from './initalHtml'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { BubbleMenuComponents } from './BubbleMenu'
 import { FloatingMenuComponent } from './FloatingMenu'
@@ -20,7 +19,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const Tiptap = () => {
   const { inforPage } = useAppContext()
-  const [newPage, setNewPage] = useState()
+  const [newPage, setNewPage] = useState<any>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
   const editor = useEditor({
@@ -32,12 +31,12 @@ const Tiptap = () => {
         lowlight: createLowlight(common)
       })
     ],
-    content: inforPage.content,
+    content: inforPage?.content,
     editorProps: {
       attributes: { class: 'outline-none' }
     },
     onUpdate(editor) {
-      setNewPage(editor.editor.getHTML() as any)
+      setNewPage(editor.editor.getHTML() )
       // console.log('getJSON==> ', editor.editor.getJSON())
       // console.log('getHTML==> ', editor.editor.getHTML())
       // console.log('getText==> ', editor.editor.getText())

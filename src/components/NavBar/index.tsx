@@ -11,33 +11,13 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { useEffect, useState } from 'react'
-import { FileIcon, FilePlus2, FilesIcon } from 'lucide-react'
+import { FilePlus2, FilesIcon } from 'lucide-react'
 import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
-
-import {
-  CalendarIcon,
-  EnvelopeClosedIcon,
-  EnvelopeOpenIcon,
-  FaceIcon,
-  GearIcon,
-  PersonIcon,
-  RocketIcon
-} from '@radix-ui/react-icons'
-
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut
-} from '@/components/ui/command'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Command, CommandItem, CommandList, CommandGroup } from '../ui/command'
 
 interface UserInterface {
   name: string
@@ -74,7 +54,7 @@ export const NavBar = () => {
   useEffect(() => {
     const fetchGetUserData = async () => {
       const data = await getUser()
-      setListUsers(data as any)
+      setListUsers(data as UserInterface[])
     }
 
     fetchGetUserData()
@@ -83,8 +63,7 @@ export const NavBar = () => {
   const ApigetPagesOfUser = async (idUser: string) => {
     try {
       const data = await getPagesOfUser(idUser)
-      console.log(data)
-      setPages(data as any)
+      setPages(data as PagesInterface[])
     } catch (error) {
       console.error(error)
     }
@@ -170,6 +149,7 @@ export const NavBar = () => {
             <CommandGroup heading="Pages">
               {pages.map((ele) => (
                 <div
+                  key={ele.title}
                   onClick={() => {
                     setInforPage(ele)
                   }}

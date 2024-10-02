@@ -2,17 +2,15 @@ import { BubbleMenu } from '@tiptap/react'
 import {
   FontBoldIcon,
   FontItalicIcon,
-  UnderlineIcon,
   StrikethroughIcon,
   CodeIcon,
-  TextIcon,
-  LetterCaseCapitalizeIcon
+  TextIcon
 } from '@radix-ui/react-icons'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Paintbrush } from 'lucide-react'
 
 interface BubbleMenuComponents {
-  editor: any
+  editor: object
 }
 
 export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
@@ -71,16 +69,17 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       tippyOptions={{ duration: 100 }}
     >
       <ToggleGroup type="multiple" className="gap-0 p-1">
-        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon }) => (
-          <ToggleGroupItem value={value} aria-label={ariaLabel} onClick={onClick}>
+        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon }, index) => (
+          <ToggleGroupItem key={index} value={value} aria-label={ariaLabel} onClick={onClick}>
             {Icon}
           </ToggleGroupItem>
         ))}
 
         <div className="w-1 h-4 border-r-2 border-zinc-800"></div>
 
-        {toggleGroupItemsColor.map(({ color, value }) => (
+        {toggleGroupItemsColor.map(({ color, value }, index) => (
           <ToggleGroupItem
+            key={index}
             value={value}
             aria-label={value}
             onClick={() =>
