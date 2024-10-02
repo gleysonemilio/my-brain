@@ -25,7 +25,7 @@ interface UserInterface {
   id: string
 }
 
-interface PagesInterface {
+export interface PagesInterface {
   id?: string
   idUser: string
   title: string
@@ -96,7 +96,7 @@ export const NavBar = () => {
               <SelectLabel>Users</SelectLabel>
 
               {listUsers.map(({ name, id }) => (
-                <SelectItem value={id} className="overflow-hidden">
+                <SelectItem value={id} key={id} className="overflow-hidden">
                   <div className="flex gap-2 items-center">
                     <div className="w-6 h-6 bg-zinc-700 rounded-sm text-center font-medium text-zinc-500 content-center">
                       {name.substring(0, 1)}

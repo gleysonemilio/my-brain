@@ -19,7 +19,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const Tiptap = () => {
   const { inforPage } = useAppContext()
-  const [newPage, setNewPage] = useState<any>()
+  const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
   const editor = useEditor({
@@ -36,7 +36,7 @@ const Tiptap = () => {
       attributes: { class: 'outline-none' }
     },
     onUpdate(editor) {
-      setNewPage(editor.editor.getHTML() )
+      setNewPage(editor.editor.getHTML())
       // console.log('getJSON==> ', editor.editor.getJSON())
       // console.log('getHTML==> ', editor.editor.getHTML())
       // console.log('getText==> ', editor.editor.getText())

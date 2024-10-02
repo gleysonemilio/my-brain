@@ -56,6 +56,7 @@ async function createUser(name: string, email: string) {
         name: name,
         email: email
     })
+    return user
 }
 
 const createPage = async ({ idUser, title, subtitle }: StateCreateNewPageInterface) => {
@@ -83,8 +84,15 @@ async function updateUser(id: string, name: string, email: string) {
         address: email
     })
 }
+interface UpdatePageInterface {
+    id: string
+    idUser: string
+    title: string
+    subtitle: string
+    content: string
+}
 
-const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: any) => {
+const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: UpdatePageInterface) => {
     const page = doc(db, 'page', id)
 
     await updateDoc(page, {
@@ -96,11 +104,5 @@ const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: any) =
 
     return page
 }
-
-
-// querySnapshot.forEach((doc) => {
-//     console.log(doc.id, " => ", doc.data());
-// });
-
 
 export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser }
