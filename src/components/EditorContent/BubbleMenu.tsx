@@ -10,7 +10,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Paintbrush } from 'lucide-react'
 
 interface BubbleMenuComponents {
-  editor: object
+  editor: any
 }
 
 export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {

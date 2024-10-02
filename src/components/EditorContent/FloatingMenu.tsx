@@ -1,10 +1,10 @@
 import { FloatingMenu } from '@tiptap/react'
 
-interface FloatingMenu {
+interface FloatingMenuInterface {
   editor: any
 }
 
-export const FloatingMenuComponent = ({ editor }: FloatingMenu) => {
+export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
   const floatingGoupItem = [
     {
       img: 'https://www.notion.so/images/blocks/header.57a7576a.png',

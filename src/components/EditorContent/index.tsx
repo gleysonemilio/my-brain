@@ -52,7 +52,7 @@ const Tiptap = () => {
   })
 
   const UpadatePage = async () => {
-    await updatePageOfUser({ ...inforPage, id: inforPage.id, content: newPage })
+    await updatePageOfUser({ ...inforPage, id: inforPage.id as string, content: newPage as string })
     setNeedSave(false)
   }
 
