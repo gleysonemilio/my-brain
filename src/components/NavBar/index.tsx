@@ -11,13 +11,13 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { useEffect, useState } from 'react'
-import { FilePlus2 } from 'lucide-react'
-import { Toggle } from '@/components/ui/toggle'
-import { getPagesOfUser, getUser } from '@/firebase/Api'
+import { FileIcon, FilePlus2, FilesIcon } from 'lucide-react'
+import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
 
 import {
   CalendarIcon,
   EnvelopeClosedIcon,
+  EnvelopeOpenIcon,
   FaceIcon,
   GearIcon,
   PersonIcon,
@@ -35,6 +35,10 @@ import {
   CommandShortcut
 } from '@/components/ui/command'
 
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+
 interface UserInterface {
   name: string
   email: string
@@ -42,36 +46,69 @@ interface UserInterface {
 }
 
 interface PagesInterface {
-  description: string
-  id: string
+  id?: string
   idUser: string
-  name: string
+  title: string
+  subtitle: string
+  content?: string
+}
+
+export interface StateCreateNewPageInterface {
+  idUser: string
+  title: string
+  subtitle: string
 }
 
 export const NavBar = () => {
-  const [listUsers, setListUsers] = useState<Array<UserInterface>>([])
-  const [selectedUser, setSelectedUser] = useState<string>('')
+  const { setInforPage } = useAppContext()
+
+  const [popoverOpen, setPopoverOpen] = useState(false)
   const [pages, setPages] = useState<Array<PagesInterface>>([])
-  const { setContent } = useAppContext()
+  const [listUsers, setListUsers] = useState<Array<UserInterface>>([])
+  const [createNewPageInfor, setCreateNewPageInfor] = useState<StateCreateNewPageInterface>({
+    title: '',
+    idUser: '',
+    subtitle: ''
+  })
 
   useEffect(() => {
     const fetchGetUserData = async () => {
       const data = await getUser()
-      setListUsers(data)
+      setListUsers(data as any)
     }
 
     fetchGetUserData()
   }, [])
 
   const ApigetPagesOfUser = async (idUser: string) => {
-    const data = await getPagesOfUser(idUser)
-    setPages(data)
+    try {
+      const data = await getPagesOfUser(idUser)
+      console.log(data)
+      setPages(data as any)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const ApiSavePage = async () => {
+    try {
+      await createPage(createNewPageInfor)
+      setPopoverOpen(false)
+      ApigetPagesOfUser(createNewPageInfor.idUser)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
     <aside className="bg-[#0b0b0c] border-r-zinc-700 p-2">
       <div className="flex content-center gap-2 justify-center items-center mt-3">
-        <Select onValueChange={(e) => ApigetPagesOfUser(e)}>
+        <Select
+          onValueChange={(e) => {
+            ApigetPagesOfUser(e)
+            setCreateNewPageInfor({ ...createNewPageInfor, idUser: e })
+          }}
+        >
           <SelectTrigger className="w-[180px] text-zinc-400 overflow-hidden">
             <SelectValue placeholder="Select a user" className="overflow-hidden" />
           </SelectTrigger>
@@ -95,34 +132,55 @@ export const NavBar = () => {
           </SelectContent>
         </Select>
 
-        <Toggle variant="outline" aria-label="Toggle italic">
-          <FilePlus2 color="#7b7b81" width={16} />
-        </Toggle>
+        <Popover open={popoverOpen} onOpenChange={(e) => setPopoverOpen(e)}>
+          <PopoverTrigger asChild>
+            <Button variant="outline">
+              <FilePlus2 color="#7b7b81" width={16} />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="grid gap-4">
+              <div className="space-y-1">
+                <h4 className="font-medium leading-none">Creater New Page</h4>
+                <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+              </div>
+              <div className="grid gap-1">
+                <div className="grid grid-cols-[12rem_1fr] items-center gap-4">
+                  <Input
+                    id="width"
+                    className="w-[100%] h-8"
+                    placeholder="Title"
+                    onChange={(e) =>
+                      setCreateNewPageInfor({ ...createNewPageInfor, title: e.target.value })
+                    }
+                  />
+                  <Button size={'sm'} onClick={() => ApiSavePage()}>
+                    save
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {pages.length > 0 && (
         <Command className="rounded-lg shadow-md mt-3">
-          {/* <CommandInput placeholder="Type a command or search..." /> */}
           <CommandList>
-            {/* <CommandEmpty>No results found.</CommandEmpty> */}
             <CommandGroup heading="Pages">
-              {pages.map(({ name, description }) => (
+              {pages.map((ele) => (
                 <div
                   onClick={() => {
-                    setContent(description)
-
-                    console.log(description)
+                    setInforPage(ele)
                   }}
                 >
                   <CommandItem className="cursor-pointer ml-2">
-                    <FaceIcon className="mr-2 h-4 w-4" />
-                    <span>{name.split(' ')[0]}</span>
+                    <FilesIcon className="mr-2 h-4 w-4" />
+                    <span>{ele.title?.split(' ')[0]}</span>
                   </CommandItem>
                 </div>
               ))}
             </CommandGroup>
-
-            {/* <CommandSeparator /> */}
           </CommandList>
         </Command>
       )}
