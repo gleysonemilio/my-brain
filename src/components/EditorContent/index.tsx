@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent, Editor } from '@tiptap/react'
+import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { BubbleMenuComponents } from './BubbleMenu'
@@ -8,7 +8,6 @@ import { FloatingMenuComponent } from './FloatingMenu'
 import { common, createLowlight } from 'lowlight'
 import { Color } from '@tiptap/extension-color'
 
-import './styles.css'
 import TextStyle from '@tiptap/extension-text-style'
 import { updatePageOfUser } from '@/firebase/Api'
 import { useAppContext } from '@/app/hooks/AppContext'
@@ -16,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { EditorProps } from '@tiptap/pm/view'
+import './styles.css'
 
 interface EditorInstance {
   editor: {
