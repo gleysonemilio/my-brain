@@ -78,7 +78,7 @@ const Tiptap = () => {
           style={{
             zIndex: '90'
           }}
-          className="w-[200px] fixed bottom-3 right-3 flex justify-center items-center gap-1 content-between"
+          className="w-[250px] fixed bottom-3 right-3 flex justify-center items-center gap-1 content-between"
         >
           <div className="h-4 w-9 justify-center items-center flex">
             <span className="text-2xl">😬</span>
