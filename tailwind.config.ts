@@ -8,6 +8,12 @@ const config: Config = {
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		screens: {
+			'sm': '240px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+		  },
 		extend: {
 			colors: {
 				background: 'var(--background)',
@@ -18,7 +24,9 @@ const config: Config = {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			}
-		}
+		},     
+	
+		
 	},
 	plugins: [
 		require('@tailwindcss/typography'),
