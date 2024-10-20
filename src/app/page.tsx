@@ -8,10 +8,9 @@ export default function Home() {
   const { inforPage } = useAppContext()
 
   return (
-    <div className=" bg-zinc-900 w-[100%] h-[100%] mx-auto min-h-[900px] grid grid-cols-[16rem_1fr]">
+    <div className="flex bg-zinc-900 w-[100%] h-[100%] md:mx-auto min-h-[900px] md:grid md:grid-cols-[16rem_1fr]">
       <NavBar />
-
-      <main className="max-m-[700px] mx-auto pt-16">{inforPage.content ? <Tiptap /> : <span></span>}</main>
+      <main className="max-m-[700px] mx-auto pt-16 p-3 bg-zinc-900" >{inforPage.content ? <Tiptap /> : <span></span>}</main>
     </div>
   )
 }
