@@ -19,6 +19,15 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Command, CommandItem, CommandList, CommandGroup } from '../ui/command'
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
 interface UserInterface {
   name: string
   email: string
@@ -79,9 +88,10 @@ export const NavBar = () => {
     }
   }
 
-  return (
-    <aside className="bg-[#0b0b0c] border-r-zinc-700 p-2">
-      <div className="flex content-center gap-2 justify-center items-center mt-3">
+
+  const returnComponent = () => {
+    return (<div>
+      <div className='flex gap-2'>
         <Select
           onValueChange={(e) => {
             ApigetPagesOfUser(e)
@@ -142,28 +152,65 @@ export const NavBar = () => {
           </PopoverContent>
         </Popover>
       </div>
+      <div>
+        {returnListPapers()}
+      </div>
+    </div>
+    )
+  }
 
-      {pages.length > 0 && (
-        <Command className="rounded-lg shadow-md mt-3">
-          <CommandList>
-            <CommandGroup heading="Pages">
-              {pages.map((ele) => (
-                <div
-                  key={ele.title}
-                  onClick={() => {
-                    setInforPage(ele)
-                  }}
-                >
-                  <CommandItem className="cursor-pointer ml-2">
-                    <FilesIcon className="mr-2 h-4 w-4" />
-                    <span>{ele.title?.split(' ')[0]}</span>
-                  </CommandItem>
-                </div>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      )}
-    </aside>
+  const returnListPapers = () => {
+    return (pages.length > 0 && (
+      <Command className="rounded-lg shadow-md mt-3">
+        <CommandList>
+          <CommandGroup heading="Pages">
+            {pages.map((ele) => (
+              <div
+                key={ele.title}
+                onClick={() => {
+                  setInforPage(ele)
+                }}
+              >
+                <CommandItem className="cursor-pointer ml-2">
+                  <FilesIcon className="mr-2 h-4 w-4" />
+                  <span>{ele.title?.split(' ')[0]}</span>
+                </CommandItem>
+              </div>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    )
+    )
+  }
+
+
+
+  return (<>
+
+    <div className='sm:fixed sm:direction-normal sm:w-[100%] sm:bg-[#0b0b0c] sm:z-10 md:hidden lg:hidden xl:hidden' >
+      <Sheet>
+        <SheetTrigger className='mt-5'>
+          Select Book
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Select Book</SheetTitle>
+            <SheetDescription>
+              {returnComponent()}
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </div>
+
+    <div className='sm:hidden md:flex lg:flex xl:flex' >
+      <aside className="bg-[#0b0b0c] border-r-zinc-700 p-3 ">
+        <div className="flex content-center gap-2 justify-center items-center mt-3">
+          {returnComponent()}
+        </div>
+      </aside>
+    </div>
+  </>
   )
 }
