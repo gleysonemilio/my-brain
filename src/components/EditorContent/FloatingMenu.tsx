@@ -42,11 +42,18 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       ActionButton: () => editor.chain().focus().toggleBulletList().run()
     },
     {
-      img: 'https://www.notion.so/images/blocks/bulleted-list.0e87e917.png',
-      title: 'Bulleted list',
-      subTitle: 'Create a simple bulleted list',
-      isActive: 'paragraph',
-      ActionButton: () => editor.chain().focus().setParagraph().run()
+      img: '',
+      title: 'Ordered List',
+      subTitle: 'Create a simple Ordered list',
+      isActive: 'orderedList',
+      ActionButton: () => editor.chain().focus().toggleOrderedList().run()
+    },
+    {
+      img: '',
+      title: 'Hard break',
+      subTitle: 'Create a simple Hard break',
+      isActive: 'hardbreak',
+      ActionButton: () => editor.chain().focus().setHardBreak().run()
     }
   ]
 
@@ -56,6 +63,8 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       className="rounded-md border bg-zinc-900 shadow-xl border-zinc-900 overflow-hidden flex flex-col p-1"
       shouldShow={({ state }) => {
         const { $from } = state.selection
+
+        console.log(`$from`, $from.nodeBefore?.textContent)
         const currentLineText = $from.nodeBefore?.textContent
 
         return currentLineText === '/'
