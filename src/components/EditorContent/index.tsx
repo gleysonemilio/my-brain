@@ -83,14 +83,16 @@ const Tiptap = () => {
 
   return (
     <div>
-      <div className="h-20 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-lg shadow-2xl">
-        <h1 className="font-mono absolute	uppercase top-28 text-5xl space-x-2">{inforPage.title}</h1>
-        <Button variant="secondary" className="absolute top-28 right-6 p-5">
+      <div className="h-20 rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-2xl">
+        <h1 className="absolute top-28 space-x-2 font-mono text-5xl uppercase">
+          {inforPage.title}
+        </h1>
+        <Button variant="secondary" className="absolute right-6 top-28 p-5">
           <Trash color="#7b7b81" width={16} />
         </Button>
       </div>
 
-      <EditorContent className="max-w-[700px] mx-auto pt-16 prose-invert prose" editor={editor} />
+      <EditorContent className="prose prose-invert mx-auto max-w-[700px] pt-16" editor={editor} />
       {BubbleMenuComponents({ editor })}
       {FloatingMenuComponent({ editor })}
       {/* https://tiptap.dev/docs/editor/extensions/marks/link */}
@@ -100,9 +102,9 @@ const Tiptap = () => {
           style={{
             zIndex: '90'
           }}
-          className="w-[250px] fixed bottom-3 right-3 flex justify-center items-center gap-1 content-between"
+          className="fixed bottom-3 right-3 flex w-[250px] content-between items-center justify-center gap-1"
         >
-          <div className="h-4 w-9 justify-center items-center flex">
+          <div className="flex h-4 w-9 items-center justify-center">
             <span className="text-2xl">😬</span>
           </div>
           <AlertTitle>Your page is not saved!</AlertTitle>

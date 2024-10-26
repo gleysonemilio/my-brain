@@ -63,11 +63,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
   ]
 
   return (
-    <BubbleMenu
-      className=" bg-zinc-950 rounded-md"
-      editor={editor}
-      tippyOptions={{ duration: 100 }}
-    >
+    <BubbleMenu className="rounded-md bg-zinc-950" editor={editor} tippyOptions={{ duration: 100 }}>
       <ToggleGroup type="multiple" className="gap-0 p-1">
         {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon }, index) => (
           <ToggleGroupItem key={index} value={value} aria-label={ariaLabel} onClick={onClick}>
@@ -75,7 +71,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
           </ToggleGroupItem>
         ))}
 
-        <div className="w-1 h-4 border-r-2 border-zinc-800"></div>
+        <div className="h-4 w-1 border-r-2 border-zinc-800"></div>
 
         {toggleGroupItemsColor.map(({ color, value }, index) => (
           <ToggleGroupItem

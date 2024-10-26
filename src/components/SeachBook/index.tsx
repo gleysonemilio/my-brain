@@ -85,7 +85,7 @@ export const SearchBook = () => {
   const returnListPapers = () => {
     return (
       pages.length > 0 && (
-        <Command className="rounded-lg shadow-md mt-3">
+        <Command className="mt-3 rounded-lg shadow-md">
           <CommandList>
             <CommandGroup heading="Pages">
               {pages.map((ele) => (
@@ -99,7 +99,7 @@ export const SearchBook = () => {
                     }, 100)
                   }}
                 >
-                  <CommandItem className="cursor-pointer ml-2">
+                  <CommandItem className="ml-2 cursor-pointer">
                     <FilesIcon className="mr-2 h-4 w-4" />
                     <span>{ele.title?.split(' ')[0]}</span>
                   </CommandItem>
@@ -122,7 +122,7 @@ export const SearchBook = () => {
               setCreateNewPageInfor({ ...createNewPageInfor, idUser: e })
             }}
           >
-            <SelectTrigger className="w-[180px] text-zinc-400 overflow-hidden">
+            <SelectTrigger className="w-[180px] overflow-hidden text-zinc-400">
               <SelectValue placeholder="Select a user" className="overflow-hidden" />
             </SelectTrigger>
             <SelectContent className="overflow-hidden">
@@ -131,12 +131,12 @@ export const SearchBook = () => {
 
                 {listUsers.map(({ name, id }) => (
                   <SelectItem value={id} key={id} className="overflow-hidden">
-                    <div className="flex gap-2 items-center">
-                      <div className="w-6 h-6 bg-zinc-700 rounded-sm text-center font-medium text-zinc-500 content-center">
+                    <div className="flex items-center gap-2">
+                      <div className="h-6 w-6 content-center rounded-sm bg-zinc-700 text-center font-medium text-zinc-500">
                         {name.substring(0, 1)}
                       </div>
                       <div>
-                        <p className="text-zinc-400 font-light">{name.split(' ')[0]}</p>
+                        <p className="font-light text-zinc-400">{name.split(' ')[0]}</p>
                       </div>
                     </div>
                   </SelectItem>
@@ -155,13 +155,13 @@ export const SearchBook = () => {
               <div className="grid gap-4">
                 <div className="space-y-1">
                   <h4 className="font-medium leading-none">Creater New Page</h4>
-                  <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+                  <p className="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
                 </div>
                 <div className="grid gap-1">
                   <div className="grid grid-cols-[12rem_1fr] items-center gap-4">
                     <Input
                       id="width"
-                      className="w-[100%] h-8"
+                      className="h-8 w-[100%]"
                       placeholder="Title"
                       onChange={(e) =>
                         setCreateNewPageInfor({ ...createNewPageInfor, title: e.target.value })

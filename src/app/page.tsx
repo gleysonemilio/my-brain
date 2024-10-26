@@ -9,8 +9,8 @@ export default function Home() {
   const { inforPage } = useAppContext()
 
   return (
-    <div className="flex bg-zinc-900 w-[100%] h-[100%] md:mx-auto min-h-[900px] md:grid md:grid-cols-[16rem_1fr]">
-      <header className="sm:fixed sm:direction-normal sm:w-[100%] sm:bg-[#0b0b0c] sm:z-10 md:hidden lg:hidden xl:hidden">
+    <div className="flex h-[100%] min-h-[900px] w-[100%] bg-zinc-900 md:mx-auto md:grid md:grid-cols-[16rem_1fr]">
+      <header className="sm:fixed sm:z-10 sm:w-[100%] sm:bg-[#0b0b0c] sm:direction-normal md:hidden lg:hidden xl:hidden">
         <Hearder />
       </header>
 
@@ -18,7 +18,7 @@ export default function Home() {
         <NavBar />
       </aside>
 
-      <main className="w-[100%] max-m-[700px] mx-auto pt-14 p-3 bg-zinc-900">
+      <main className="max-m-[700px] mx-auto w-[100%] bg-zinc-900 p-3 pt-14">
         {inforPage.content ? <Tiptap /> : <span></span>}
       </main>
     </div>

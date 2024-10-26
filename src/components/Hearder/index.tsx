@@ -17,7 +17,7 @@ import { SearchBook } from '../SeachBook'
 
 export const Hearder = () => {
   return (
-    <div className="flex gap-2 justify-between p-2">
+    <div className="flex justify-between gap-2 p-2">
       <div>
         <Image src={LogoBrain} width={70} height={50} alt="Picture of the author" />
       </div>

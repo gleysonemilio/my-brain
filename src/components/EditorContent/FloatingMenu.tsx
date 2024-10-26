@@ -60,7 +60,7 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
   return (
     <FloatingMenu
       editor={editor}
-      className="rounded-md border bg-zinc-900 shadow-xl border-zinc-900 overflow-hidden flex flex-col p-1"
+      className="flex flex-col overflow-hidden rounded-md border border-zinc-900 bg-zinc-900 p-1 shadow-xl"
       shouldShow={({ state }) => {
         const { $from } = state.selection
 
@@ -74,9 +74,9 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
         <button
           key={index}
           onClick={() => ActionButton()}
-          className="flex items-center gap-2 p-1 min-w-[280px] hover:bg-zinc-800 hover:rounded"
+          className="flex min-w-[280px] items-center gap-2 p-1 hover:rounded hover:bg-zinc-800"
         >
-          <img src={img} alt="text" className="w-12 border-zinc-600 rounded" />
+          <img src={img} alt="text" className="w-12 rounded border-zinc-600" />
           <div className="flex flex-col text-left">
             <span className="text-sm text-zinc-100">{title}</span>
             <span className="text-xs text-zinc-500">{subTitle}</span>
