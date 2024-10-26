@@ -19,7 +19,7 @@ export const Hearder = () => {
   return (
     <div className="flex gap-2 justify-between p-2">
       <div>
-        <Image src={LogoBrain} width={35} height={50} alt="Picture of the author" />
+        <Image src={LogoBrain} width={70} height={50} alt="Picture of the author" />
       </div>
       <div>
         <Sheet>
