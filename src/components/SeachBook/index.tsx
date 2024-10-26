@@ -38,6 +38,7 @@ export interface StateCreateNewPageInterface {
   idUser: string
   title: string
   subtitle: string
+  content: string
 }
 
 export const SearchBook = () => {
@@ -48,7 +49,8 @@ export const SearchBook = () => {
   const [createNewPageInfor, setCreateNewPageInfor] = useState<StateCreateNewPageInterface>({
     title: '',
     idUser: '',
-    subtitle: ''
+    subtitle: '',
+    content: ''
   })
 
   useEffect(() => {
