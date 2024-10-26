@@ -18,7 +18,7 @@ export default function Home() {
         <NavBar />
       </aside>
 
-      <main className="w-[100%] max-m-[700px] mx-auto pt-16 p-3 bg-zinc-900">
+      <main className="w-[100%] max-m-[700px] mx-auto pt-14 p-3 bg-zinc-900">
         {inforPage.content ? <Tiptap /> : <span></span>}
       </main>
     </div>
