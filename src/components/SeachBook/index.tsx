@@ -41,10 +41,9 @@ export interface StateCreateNewPageInterface {
 }
 
 export const SearchBook = () => {
-  const { setInforPage } = useAppContext()
+  const { setInforPage, resertInforPage, pages, setPages } = useAppContext()
 
   const [popoverOpen, setPopoverOpen] = useState(false)
-  const [pages, setPages] = useState<Array<PagesInterface>>([])
   const [listUsers, setListUsers] = useState<Array<UserInterface>>([])
   const [createNewPageInfor, setCreateNewPageInfor] = useState<StateCreateNewPageInterface>({
     title: '',
@@ -91,7 +90,11 @@ export const SearchBook = () => {
                 <div
                   key={ele.title}
                   onClick={() => {
-                    setInforPage(ele)
+                    resertInforPage()
+
+                    setTimeout(() => {
+                      return setInforPage(ele)
+                    }, 100)
                   }}
                 >
                   <CommandItem className="cursor-pointer ml-2">
