@@ -35,7 +35,7 @@ interface EditorOptions {
 }
 
 const Tiptap = () => {
-  const { inforPage } = useAppContext()
+  const { inforPage, setPages, pages } = useAppContext()
   const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
@@ -62,6 +62,15 @@ const Tiptap = () => {
 
   const UpadatePage = async () => {
     await updatePageOfUser({ ...inforPage, id: inforPage.id as string, content: newPage as string })
+
+    setPages(
+      pages.map((ele) => {
+        if (ele.id === inforPage.id) {
+          return { ...inforPage, content: newPage as string }
+        }
+        return ele
+      })
+    )
     setNeedSave(false)
   }
 
@@ -73,6 +82,15 @@ const Tiptap = () => {
 
   return (
     <div>
+      <div className="h-20 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-lg shadow-2xl">
+        <h1 className="font-mono absolute	uppercase top-28 text-5xl space-x-2">{inforPage.title}</h1>
+      </div>
+
+      <EditorContent className="max-w-[700px] mx-auto pt-16 prose-invert prose" editor={editor} />
+      {BubbleMenuComponents({ editor })}
+      {FloatingMenuComponent({ editor })}
+      {/* https://tiptap.dev/docs/editor/extensions/marks/link */}
+
       {needSave && (
         <Alert
           style={{
@@ -91,10 +109,6 @@ const Tiptap = () => {
           </AlertDescription>
         </Alert>
       )}
-      <EditorContent className="max-w-[700px] mx-auto pt-16 prose-invert prose" editor={editor} />
-      {BubbleMenuComponents({ editor })}
-      {FloatingMenuComponent({ editor })}
-      {/* https://tiptap.dev/docs/editor/extensions/marks/link */}
     </div>
   )
 }
