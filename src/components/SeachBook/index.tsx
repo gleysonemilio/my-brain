@@ -1,6 +1,10 @@
 'use client'
 
 import { useAppContext } from '@/app/hooks/AppContext'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Command, CommandGroup, CommandItem, CommandList } from '../ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -10,15 +14,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { AlignJustify, FilePlus2, FilesIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
-
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Command, CommandItem, CommandList, CommandGroup } from '../ui/command'
-
-import { FilePlus2, FilesIcon, AlignJustify } from 'lucide-react'
 
 interface UserInterface {
   name: string

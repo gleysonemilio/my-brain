@@ -1,22 +1,21 @@
 'use client'
 
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import { useAppContext } from '@/app/hooks/AppContext'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { updatePageOfUser } from '@/firebase/Api'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
+import { EditorContent, useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { common, createLowlight } from 'lowlight'
+import { Trash } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
 import { BubbleMenuComponents } from './BubbleMenu'
 import { FloatingMenuComponent } from './FloatingMenu'
-import { common, createLowlight } from 'lowlight'
-import { Color } from '@tiptap/extension-color'
-
-import TextStyle from '@tiptap/extension-text-style'
-import { updatePageOfUser } from '@/firebase/Api'
-import { useAppContext } from '@/app/hooks/AppContext'
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import './styles.css'
-import { Trash } from 'lucide-react'
 
 interface EditorInstance {
   editor: {
