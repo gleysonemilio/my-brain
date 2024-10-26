@@ -26,12 +26,17 @@ const firebaseapp = initializeApp({
     //   measurementId: 'G-92HV7GFHQW'
 })
 
-
-
 const db = getFirestore(firebaseapp)
 const userCollectionRef = collection(db, 'user')
 const pageCollectionRef = collection(db, 'page')
 
+export interface UpdatePageInterface {
+    id: string
+    idUser: string
+    title: string
+    subtitle: string
+    content: string
+}
 
 const getUser = async () => {
     const data = await getDocs(userCollectionRef)
@@ -44,7 +49,6 @@ const getPagesOfUser = async (idUser: string) => {
 
     return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 }
-
 
 const getPageId = async (idPage: string) => { //not use
     const data = await getDoc(doc(db, 'page', idPage))
@@ -83,13 +87,6 @@ async function updateUser(id: string, name: string, email: string) {
         name: name,
         address: email
     })
-}
-interface UpdatePageInterface {
-    id: string
-    idUser: string
-    title: string
-    subtitle: string
-    content: string
 }
 
 const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: UpdatePageInterface) => {
