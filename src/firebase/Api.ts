@@ -1,6 +1,6 @@
 
 
-import { StateCreateNewPageInterface } from '@/components/NavBar'
+import { StateCreateNewPageInterface } from '@/components/SeachBook'
 import { initializeApp } from 'firebase/app'
 import {
     collection,
