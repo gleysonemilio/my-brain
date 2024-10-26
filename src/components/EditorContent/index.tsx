@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import './styles.css'
+import { Trash } from 'lucide-react'
 
 interface EditorInstance {
   editor: {
@@ -84,6 +85,9 @@ const Tiptap = () => {
     <div>
       <div className="h-20 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-lg shadow-2xl">
         <h1 className="font-mono absolute	uppercase top-28 text-5xl space-x-2">{inforPage.title}</h1>
+        <Button variant="secondary" className="absolute top-28 right-6 p-5">
+          <Trash color="#7b7b81" width={16} />
+        </Button>
       </div>
 
       <EditorContent className="max-w-[700px] mx-auto pt-16 prose-invert prose" editor={editor} />
