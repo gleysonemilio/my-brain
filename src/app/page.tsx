@@ -1,9 +1,10 @@
 'use client'
 
-import { NavBar } from '@/components/NavBar'
-import { useAppContext } from './hooks/AppContext'
 import Tiptap from '@/components/EditorContent'
 import { Hearder } from '@/components/Hearder'
+import { NavBar } from '@/components/NavBar'
+
+import { useAppContext } from './hooks/AppContext'
 
 export default function Home() {
   const { inforPage } = useAppContext()

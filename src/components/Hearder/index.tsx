@@ -1,10 +1,5 @@
-import { AlignJustify } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
-
 import LogoBrain from '@/assets/logo-brain-1.png'
-
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -13,6 +8,9 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
+import { AlignJustify } from 'lucide-react'
+import Image from 'next/image'
+
 import { SearchBook } from '../SeachBook'
 
 export const Hearder = () => {

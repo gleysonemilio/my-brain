@@ -1,6 +1,6 @@
+import LogoBrain from '@/assets/logo-brain-1.png'
 import Image from 'next/image'
 
-import LogoBrain from '@/assets/logo-brain-1.png'
 import { SearchBook } from '../SeachBook'
 
 export const NavBar = () => {

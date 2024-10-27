@@ -1,12 +1,12 @@
-import { BubbleMenu } from '@tiptap/react'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import {
+  CodeIcon,
   FontBoldIcon,
   FontItalicIcon,
   StrikethroughIcon,
-  CodeIcon,
   TextIcon
 } from '@radix-ui/react-icons'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { BubbleMenu } from '@tiptap/react'
 import { Paintbrush } from 'lucide-react'
 
 interface BubbleMenuComponents {
