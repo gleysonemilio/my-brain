@@ -3,7 +3,6 @@
 import { useAppContext } from '@/app/hooks/AppContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Command, CommandGroup, CommandItem, CommandList } from '../ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Select,
@@ -14,9 +13,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
 import { AlignJustify, FilePlus2, FilesIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
+import InputEmoji from 'react-input-emoji'
+
+import { Command, CommandGroup, CommandItem, CommandList } from '../ui/command'
 
 interface UserInterface {
   name: string
@@ -29,14 +31,8 @@ export interface PagesInterface {
   idUser: string
   title: string
   subtitle: string
-  content?: string
-}
-
-export interface StateCreateNewPageInterface {
-  idUser: string
-  title: string
-  subtitle: string
-  content: string
+  content?: string | null
+  emoji?: string
 }
 
 export const SearchBook = () => {
@@ -44,11 +40,13 @@ export const SearchBook = () => {
 
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [listUsers, setListUsers] = useState<Array<UserInterface>>([])
-  const [createNewPageInfor, setCreateNewPageInfor] = useState<StateCreateNewPageInterface>({
+  const [emoji, setEmoji] = useState('')
+  const [createNewPageInfor, setCreateNewPageInfor] = useState<PagesInterface>({
     title: '',
     idUser: '',
     subtitle: '',
-    content: ''
+    content: '',
+    emoji: ''
   })
 
   useEffect(() => {
@@ -72,7 +70,7 @@ export const SearchBook = () => {
 
   const ApiSavePage = async () => {
     try {
-      await createPage(createNewPageInfor)
+      await createPage({ ...createNewPageInfor, emoji })
       setPopoverOpen(false)
       ApigetPagesOfUser(createNewPageInfor.idUser)
     } catch (error) {
@@ -98,8 +96,8 @@ export const SearchBook = () => {
                   }}
                 >
                   <CommandItem className="ml-2 cursor-pointer">
-                    <FilesIcon className="mr-2 h-4 w-4" />
-                    <span>{ele.title?.split(' ')[0]}</span>
+                    <span className="mr-2 h-4 w-4">{ele?.emoji || <FilesIcon />}</span>
+                    <span>{ele.title}</span>
                   </CommandItem>
                 </div>
               ))}
@@ -156,6 +154,7 @@ export const SearchBook = () => {
                   <p className="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
                 </div>
                 <div className="grid gap-1">
+                  <InputEmoji value={emoji} onChange={setEmoji} placeholder="Select one emoji" />
                   <div className="grid grid-cols-[12rem_1fr] items-center gap-4">
                     <Input
                       id="width"
