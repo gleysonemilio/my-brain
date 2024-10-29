@@ -6,12 +6,14 @@ import { Button } from '@/components/ui/button'
 import { updatePageOfUser } from '@/firebase/Api'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
+import Link from '@tiptap/extension-link'
+import Paragraph from '@tiptap/extension-paragraph'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
 import { Trash } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { BubbleMenuComponents } from './BubbleMenu'
 import { FloatingMenuComponent } from './FloatingMenu'
@@ -44,8 +46,14 @@ const Tiptap = () => {
       Color,
       StarterKit,
       TextStyle,
+      Paragraph,
       CodeBlockLowlight.configure({
         lowlight: createLowlight(common)
+      }),
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+        defaultProtocol: 'https'
       })
     ],
     content: inforPage?.content,
@@ -84,6 +92,7 @@ const Tiptap = () => {
     <div>
       <div className="h-20 rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-2xl">
         <h1 className="absolute top-28 space-x-2 font-mono text-5xl uppercase">
+          {inforPage?.emoji || ''}
           {inforPage.title}
         </h1>
         <Button variant="secondary" className="absolute right-6 top-28 p-5">
