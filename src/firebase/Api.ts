@@ -1,6 +1,6 @@
 
 
-import { StateCreateNewPageInterface } from '@/components/SeachBook'
+import { PagesInterface } from '@/components/SeachBook'
 import { initializeApp } from 'firebase/app'
 import {
     collection,
@@ -35,7 +35,8 @@ export interface UpdatePageInterface {
     idUser: string
     title: string
     subtitle: string
-    content: string
+    content?: string | null
+    emoji?: string
 }
 
 const getUser = async () => {
@@ -63,12 +64,13 @@ async function createUser(name: string, email: string) {
     return user
 }
 
-const createPage = async ({ idUser, title, subtitle }: StateCreateNewPageInterface) => {
+const createPage = async ({ idUser, title, subtitle, emoji }: PagesInterface) => {
     const page = await addDoc(pageCollectionRef, {
         content: '<h1>About what are you thinking?🤔 </h1>',
         idUser: idUser || null,
         title: title || null,
-        subtitle: subtitle || null
+        subtitle: subtitle || null,
+        emoji: emoji || null
     })
 
     return page
