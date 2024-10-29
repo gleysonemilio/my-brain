@@ -1,25 +1,23 @@
+import IconGoogle from '@/assets/icons-google.svg'
 import LogoBrain from '@/assets/logo-brain-1.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 
 export default function Page() {
+  const ImgLogo = (className: string) => {
+    return <Image src={LogoBrain} width={100} alt="Picture of the Logo" className={className} />
+  }
   return (
-    <div className="grid grid-cols-2 gap-4 h-[100vh]">
-      <div className="col-span-1 bg-zinc-900">
-        <div className="p-9">
-          <Image
-            src={LogoBrain}
-            width={90}
-            height={90}
-            alt="Picture of the author"
-            className="animate-pulse"
-          />
-        </div>
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 h-[100vh]">
+      <div className=" bg-zinc-900 md:flex md:col-span-1 sm:hidden">
+        <div className="p-9">{ImgLogo('animate-pulse')}</div>
       </div>
-      <div className="col-span-1 justify-center flex items-center">
-        <div className="w-[75%] flex flex-col items-center gap-4">
-          <div className="flex flex-col  w-full justify-center items-center">
+
+      <div className="col-span-1 sm:justify-evenly md:justify-center flex flex-col items-center gap-11">
+        {ImgLogo('sm:flex md:hidden animate-pulse')}
+        <div className="sm:max-w-lg md:max-w-md flex flex-col items-center gap-4 p-4">
+          <div className="flex flex-col w-full justify-center items-center">
             <h2 className="mt-10 scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
               Create an account
             </h2>
@@ -41,7 +39,8 @@ export default function Page() {
             <hr className="w-full border-zinc-800" />
           </div>
           <div className="grid w-full items-center gap-2">
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full gap-2">
+              <Image width={15} alt="Icon Google" src={IconGoogle} />
               Google
             </Button>
           </div>
