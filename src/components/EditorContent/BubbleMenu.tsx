@@ -38,7 +38,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
   const toggleGroupItems = [
     {
       value: 'paragraph',
-      ariaLabel: 'Toggle code block',
+      ariaLabel: 'Toggle paragraph',
       onClick: () => editor.chain().focus().setParagraph().run(),
       Icon: <TextIcon className="h-4 w-4" />
     },
