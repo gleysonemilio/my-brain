@@ -7,13 +7,34 @@ import {
   TextIcon
 } from '@radix-ui/react-icons'
 import { BubbleMenu } from '@tiptap/react'
-import { Paintbrush } from 'lucide-react'
+import { Link2, Link2Off, Paintbrush } from 'lucide-react'
+import { useCallback } from 'react'
 
 interface BubbleMenuComponents {
   editor: any
 }
 
 export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
+  const setLink = useCallback(() => {
+    const previousUrl = editor?.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor?.chain().focus().extendMarkRange('link').unsetLink().run()
+
+      return
+    }
+
+    // update link
+    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  }, [editor])
+
   const toggleGroupItems = [
     {
       value: 'paragraph',
@@ -44,6 +65,21 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       ariaLabel: 'Toggle code block',
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
       Icon: <CodeIcon className="h-4 w-4" />
+    },
+    {
+      value: 'setLink',
+      ariaLabel: 'Set Link',
+      onClick: () => setLink(),
+      className: editor?.isActive('link') ? 'is-active' : '',
+      Icon: <Link2 className="h-4 w-4" />
+    },
+    {
+      value: 'unsetlink',
+      ariaLabel: 'Unset link',
+      onClick: () => editor?.chain().focus().unsetLink().run(),
+      className: editor?.isActive('link') ? 'is-active' : '',
+      Icon: <Link2Off className="h-4 w-4" />,
+      disabled: !editor?.isActive('link')
     }
   ]
 
@@ -65,8 +101,15 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
   return (
     <BubbleMenu className="rounded-md bg-zinc-950" editor={editor} tippyOptions={{ duration: 100 }}>
       <ToggleGroup type="multiple" className="gap-0 p-1">
-        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon }, index) => (
-          <ToggleGroupItem key={index} value={value} aria-label={ariaLabel} onClick={onClick}>
+        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon, className, disabled }, index) => (
+          <ToggleGroupItem
+            key={index}
+            value={value}
+            aria-label={ariaLabel}
+            onClick={onClick}
+            className={className || ''}
+            disabled={disabled || false}
+          >
             {Icon}
           </ToggleGroupItem>
         ))}
