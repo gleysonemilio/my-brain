@@ -14,9 +14,10 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { createPage, getPagesOfUser, getUser } from '@/firebase/Api'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import { AlignJustify, FilePlus2, FilesIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import InputEmoji from 'react-input-emoji'
 
 import { Command, CommandGroup, CommandItem, CommandList } from '../ui/command'
 
@@ -108,6 +109,7 @@ export const SearchBook = () => {
     )
   }
 
+
   return (
     <>
       <div>
@@ -147,14 +149,16 @@ export const SearchBook = () => {
                 <FilePlus2 color="#7b7b81" width={16} />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80">
+            <PopoverContent className="table w-80">
               <div className="grid gap-4">
                 <div className="space-y-1">
                   <h4 className="font-medium leading-none">Creater New Page</h4>
                   <p className="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
                 </div>
                 <div className="grid gap-1">
-                  <InputEmoji value={emoji} onChange={setEmoji} placeholder="Select one emoji" />
+
+                  <Picker data={data} onEmojiSelect={(value: any) => setEmoji(value.native)} />
+
                   <div className="grid grid-cols-[12rem_1fr] items-center gap-4">
                     <Input
                       id="width"
