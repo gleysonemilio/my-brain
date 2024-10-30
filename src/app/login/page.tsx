@@ -4,7 +4,7 @@ import IconGoogle from '@/assets/icons-google.svg'
 import LogoBrain from '@/assets/logo-brain-1.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { signInApp } from '@/firebase/Api'
+import { signInWithPopupFirebase } from '@/firebase/Api'
 import { getCookie } from 'cookies-next'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -23,11 +23,11 @@ export default function Page() {
     // router.push('/')
   }
 
-  const signLogin = async () => {
+  const handleSignLogin = async () => {
     if (getCookie('uid')) return router.push('/')
 
     try {
-      await signInApp()
+      await signInWithPopupFirebase()
 
       router.push('/')
     } catch (err) {
@@ -66,7 +66,7 @@ export default function Page() {
             <hr className="w-full border-zinc-800" />
           </div>
           <div className="grid w-full items-center gap-2">
-            <Button variant="outline" className="w-full gap-2" onClick={signLogin}>
+            <Button variant="outline" className="w-full gap-2" onClick={handleSignLogin}>
               <Image width={15} alt="Icon Google" src={IconGoogle} />
               Google
             </Button>
