@@ -81,7 +81,7 @@ export const SearchBook = () => {
   const returnListPapers = () => {
     return (
       pages.length > 0 && (
-        <Command className="mt-3 rounded-lg shadow-md">
+        <Command className="mt-3 rounded-lg shadow-md bg-zinc-200">
           <CommandList>
             <CommandGroup heading="Pages">
               {pages.map((ele) => (
