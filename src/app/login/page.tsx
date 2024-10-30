@@ -1,13 +1,40 @@
+'use client'
+
 import IconGoogle from '@/assets/icons-google.svg'
 import LogoBrain from '@/assets/logo-brain-1.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { signInApp } from '@/firebase/Api'
+import { getCookie } from 'cookies-next'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+  const router = useRouter()
+
   const ImgLogo = (className: string) => {
     return <Image src={LogoBrain} width={100} alt="Picture of the Logo" className={className} />
   }
+
+  function handleSubmit(e: any) {
+    e.preventDefault()
+    // signInApp()
+
+    // router.push('/')
+  }
+
+  const signLogin = async () => {
+    if (getCookie('uid')) return router.push('/')
+
+    try {
+      await signInApp()
+
+      router.push('/')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 h-[100vh]">
       <div className=" bg-zinc-900 md:flex md:col-span-1 sm:hidden">
@@ -26,7 +53,7 @@ export default function Page() {
             </p>
           </div>
 
-          <form className="grid w-full items-center gap-2">
+          <form onSubmit={handleSubmit} className="grid w-full items-center gap-2">
             <Input id="email" type="email" placeholder="name@example.com" />
             <Button>Sign In with Email</Button>
           </form>
@@ -39,7 +66,7 @@ export default function Page() {
             <hr className="w-full border-zinc-800" />
           </div>
           <div className="grid w-full items-center gap-2">
-            <Button variant="outline" className="w-full gap-2">
+            <Button variant="outline" className="w-full gap-2" onClick={signLogin}>
               <Image width={15} alt="Icon Google" src={IconGoogle} />
               Google
             </Button>
