@@ -1,5 +1,4 @@
 
-
 import { PagesInterface } from '@/components/SeachBook'
 import { initializeApp } from 'firebase/app'
 import {
@@ -14,9 +13,10 @@ import {
     query,
     where
 } from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { setCookie } from 'cookies-next';
 
-
-const firebaseapp = initializeApp({
+export const firebaseapp = initializeApp({
     apiKey: 'AIzaSyBCW1rGB8Z-CTYAez00hF3jsDk20b-E7UU',
     authDomain: 'my-brain-next.firebaseapp.com',
     projectId: 'my-brain-next'
@@ -27,8 +27,10 @@ const firebaseapp = initializeApp({
 })
 
 const db = getFirestore(firebaseapp)
+const auth = getAuth(firebaseapp)
 const userCollectionRef = collection(db, 'user')
 const pageCollectionRef = collection(db, 'page')
+const provider = new GoogleAuthProvider()
 
 export interface UpdatePageInterface {
     id: string
@@ -37,6 +39,26 @@ export interface UpdatePageInterface {
     subtitle: string
     content?: string | null
     emoji?: string
+}
+
+const signInWithPopupFirebase = async () => {
+    await signInWithPopup(auth, provider).then((data) => {
+        const { uid, email, displayName, photoURL } = data.user
+
+        setCookie('uid', uid)
+        setCookie('email', email)
+        setCookie('photoURL', photoURL)
+        setCookie('displayName', displayName)
+
+        return uid
+        // const filterDataUser = ['uid', 'email', 'displayName', 'photoURL']
+        // // const newArrayData = Object.keys(data.user).filter((key) => filterDataUser.includes(key))
+
+        // // setCookie('photoURL', data.user['photoURL'])
+        // filterDataUser.map((value: string) =>
+        //     setCookie(value, data.user[value])
+        // )
+    })
 }
 
 const getUser = async () => {
@@ -104,4 +126,4 @@ const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: Update
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase }
