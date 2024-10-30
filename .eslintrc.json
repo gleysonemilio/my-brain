@@ -13,8 +13,7 @@
       {
         "extensiona": [
           ".js",
-          ".jsx",
-          "tsx"
+          ".jsx"
         ]
       }
     ],
