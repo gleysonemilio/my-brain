@@ -1,6 +1,5 @@
 
 import { PagesInterface } from '@/components/SeachBook'
-import { initializeApp } from 'firebase/app'
 import {
     collection,
     getFirestore,
@@ -15,16 +14,8 @@ import {
 } from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { setCookie } from 'cookies-next';
+import { firebaseapp } from './initializeApp';
 
-export const firebaseapp = initializeApp({
-    apiKey: 'AIzaSyBCW1rGB8Z-CTYAez00hF3jsDk20b-E7UU',
-    authDomain: 'my-brain-next.firebaseapp.com',
-    projectId: 'my-brain-next'
-    //   storageBucket: 'my-brain-next.appspot.com',
-    //   messagingSenderId: '1055840379096',
-    //   appId: '1:1055840379096:web:8807715fd8e17b637037ad',
-    //   measurementId: 'G-92HV7GFHQW'
-})
 
 const db = getFirestore(firebaseapp)
 const auth = getAuth(firebaseapp)
