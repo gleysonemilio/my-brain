@@ -82,8 +82,8 @@ export const SearchBook = () => {
   const returnListPapers = () => {
     return (
       pages.length > 0 && (
-        <Command className="mt-3 rounded-lg shadow-md bg-zinc-200">
-          <CommandList>
+        <Command className="h-full mt-3 rounded-lg shadow-md bg-zinc-200">
+          <CommandList className="max-h-full">
             <CommandGroup heading="Pages">
               {pages.map((ele) => (
                 <div
@@ -109,76 +109,79 @@ export const SearchBook = () => {
     )
   }
 
-
   return (
-    <>
-      <div>
-        <div className="flex gap-2">
-          <Select
-            onValueChange={(e) => {
-              ApigetPagesOfUser(e)
-              setCreateNewPageInfor({ ...createNewPageInfor, idUser: e })
-            }}
-          >
-            <SelectTrigger className="w-[180px] overflow-hidden text-zinc-400">
-              <SelectValue placeholder="Select a user" className="overflow-hidden" />
-            </SelectTrigger>
-            <SelectContent className="overflow-hidden">
-              <SelectGroup className="overflow-hidden">
-                <SelectLabel>Users</SelectLabel>
+    <div className="h-full flex flex-col justify-between">
+      <div className="flex gap-2">
+        <Select
+          onValueChange={(e) => {
+            ApigetPagesOfUser(e)
+            setCreateNewPageInfor({ ...createNewPageInfor, idUser: e })
+          }}
+        >
+          <SelectTrigger className="w-[180px] overflow-hidden text-zinc-400">
+            <SelectValue placeholder="Select a user" className="overflow-hidden" />
+          </SelectTrigger>
+          <SelectContent className="overflow-hidden">
+            <SelectGroup className="overflow-hidden">
+              <SelectLabel>Users</SelectLabel>
 
-                {listUsers.map(({ name, id }) => (
-                  <SelectItem value={id} key={id} className="overflow-hidden">
-                    <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 content-center rounded-sm bg-zinc-700 text-center font-medium text-zinc-500">
-                        {name.substring(0, 1)}
-                      </div>
-                      <div>
-                        <p className="font-light text-zinc-400">{name.split(' ')[0]}</p>
-                      </div>
+              {listUsers.map(({ name, id }) => (
+                <SelectItem value={id} key={id} className="overflow-hidden">
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 content-center rounded-sm bg-zinc-700 text-center font-medium text-zinc-500">
+                      {name.substring(0, 1)}
                     </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Popover open={popoverOpen} onOpenChange={(e) => setPopoverOpen(e)}>
-            <PopoverTrigger asChild>
-              <Button variant="outline">
-                <FilePlus2 color="#7b7b81" width={16} />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="table w-80">
-              <div className="grid gap-4">
-                <div className="space-y-1">
-                  <h4 className="font-medium leading-none">Creater New Page</h4>
-                  <p className="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
-                </div>
-                <div className="grid gap-1">
-
-                  <Picker data={data} onEmojiSelect={(value: any) => setEmoji(value.native)} />
-
-                  <div className="grid grid-cols-[12rem_1fr] items-center gap-4">
-                    <Input
-                      id="width"
-                      className="h-8 w-[100%]"
-                      placeholder="Title"
-                      onChange={(e) =>
-                        setCreateNewPageInfor({ ...createNewPageInfor, title: e.target.value })
-                      }
-                    />
-                    <Button size={'sm'} onClick={() => ApiSavePage()}>
-                      save
-                    </Button>
+                    <div>
+                      <p className="font-light text-zinc-400">{name.split(' ')[0]}</p>
+                    </div>
                   </div>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Popover open={popoverOpen} onOpenChange={(e) => setPopoverOpen(e)}>
+          <PopoverTrigger asChild>
+            <Button variant="outline">
+              <FilePlus2 color="#7b7b81" width={16} />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="table w-80">
+            <div className="grid gap-4">
+              <div className="space-y-1">
+                <h4 className="font-medium leading-none">Creater New Page</h4>
+                <p className="text-muted-foreground text-sm">
+                  Select an emoji then enter the name of your book.
+                </p>
+              </div>
+              <div className="grid gap-3">
+                <div className="flex flex-row items-center gap-4">
+                  <span className="text-5xl">{emoji}</span>
+                  <Input
+                    id="width"
+                    className="h-8 w-[100%]"
+                    placeholder="Title"
+                    onChange={(e) =>
+                      setCreateNewPageInfor({ ...createNewPageInfor, title: e.target.value })
+                    }
+                  />
+                  <Button size={'sm'} onClick={() => ApiSavePage()}>
+                    save
+                  </Button>
+                </div>
+                <hr className="w-full border-zinc-800" />
+
+                <div>
+                  <p className="text-muted-foreground text-sm">select emoji</p>
+                  <Picker data={data} onEmojiSelect={(value: any) => setEmoji(value.native)} />
                 </div>
               </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <div>{returnListPapers()}</div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
-    </>
+      <div className="h-full">{returnListPapers()}</div>
+    </div>
   )
 }
