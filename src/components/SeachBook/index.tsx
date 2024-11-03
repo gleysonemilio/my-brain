@@ -19,6 +19,7 @@ import Picker from '@emoji-mart/react'
 import { AlignJustify, FilePlus2, FilesIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { DropdownLogout } from '../DropdownLogout'
 import { Command, CommandGroup, CommandItem, CommandList } from '../ui/command'
 
 interface UserInterface {
@@ -182,6 +183,8 @@ export const SearchBook = () => {
         </Popover>
       </div>
       <div className="h-full">{returnListPapers()}</div>
+
+      <DropdownLogout />
     </div>
   )
 }
