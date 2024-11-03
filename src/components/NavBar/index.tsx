@@ -2,7 +2,6 @@ import LogoBrain from '@/assets/logo-brain-1.png'
 import Image from 'next/image'
 
 import { SearchBook } from '../SeachBook'
-import { DropdownLogout } from '../DropdownLogout'
 
 export const NavBar = () => {
   return (
@@ -11,7 +10,6 @@ export const NavBar = () => {
 
       <div className="h-[95%] flex flex-col mt-3 gap-3">
         <SearchBook />
-        <DropdownLogout />
       </div>
     </div>
   )
