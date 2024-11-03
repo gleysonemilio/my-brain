@@ -16,10 +16,10 @@ import { SearchBook } from '../SeachBook'
 export const Hearder = () => {
   return (
     <div className="flex justify-between gap-2 p-2">
-      <div className='flex items-center'>
+      <div className="flex items-center">
         <Image src={LogoBrain} width={70} height={50} alt="Picture of the author" />
       </div>
-      <div>
+      <div className="h-full">
         <Sheet>
           <SheetTrigger className="w-[100%]">
             <Button variant="outline">
@@ -29,9 +29,9 @@ export const Hearder = () => {
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Select Book</SheetTitle>
-              <SheetDescription>
+              <div className="h-[95%] flex flex-col mt-3 gap-3">
                 <SearchBook />
-              </SheetDescription>
+              </div>
             </SheetHeader>
           </SheetContent>
         </Sheet>
