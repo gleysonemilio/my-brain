@@ -18,7 +18,11 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: 'Brain',
-  description: 'App by Gleyson'
+  description: 'App by Gleyson',
+  manifest: '/manifest.json',
+  keywords: ['json viewer', 'technology', 'web application'],
+  viewport:
+    'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-     fit=no, viewport-fit=cover'
 }
 
 export default function RootLayout({
