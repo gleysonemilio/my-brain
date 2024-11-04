@@ -27,7 +27,7 @@ export const DropdownLogout = () => {
   const handleLogOut = () => {
     ;['photoURL', 'photoURL', 'uid', 'email', 'displayName'].forEach((key) => deleteCookie(key))
 
-    return router.push('/login')
+    return router.push('/')
   }
 
   return (
