@@ -33,7 +33,7 @@
     "lang": "pt-BR",
     "name": "Brain",
     "short_name": "my-brain",
-    "start_url": "http://localhost:3000/",
-    "scope": "http://localhost:3000/",
+    "start_url": "https://my-brain-nine.vercel.app/",
+    "scope": "https://my-brain-nine.vercel.app/",
     "description": "Json view"
 }
