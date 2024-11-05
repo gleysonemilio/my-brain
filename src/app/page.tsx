@@ -8,6 +8,7 @@ import { signInWithPopupFirebase } from '@/firebase/Api'
 import { getCookie } from 'cookies-next'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Page() {
   const router = useRouter()
@@ -34,6 +35,10 @@ export default function Page() {
       console.log(err)
     }
   }
+
+  useEffect(() => {
+    if (getCookie('uid')) return router.push('/my-book')
+  }, [])
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 h-[100vh]">
