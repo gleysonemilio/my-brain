@@ -28,10 +28,20 @@ export interface UpdatePageInterface {
     id: string
     idUser: string
     title: string
-    subtitle: string
+    subtitle?: string
     content?: string | null
     emoji?: string
 }
+
+export interface UpdatePageInterface {
+    id: string
+    idPage: string
+    title: string
+    subtitle?: string
+    content?: string | null
+    emoji?: string
+}
+
 
 const signInWithPopupFirebase = async () => {
     await signInWithPopup(auth, provider).then((data) => {
@@ -133,9 +143,9 @@ async function updateUser(id: string, name: string, email: string) {
 }
 
 const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: UpdatePageInterface) => {
-    const page = doc(db, 'page', id)
+    if (!content || !id) return null
 
-    if (!content) return null
+    const page = doc(db, 'page', id)
 
     await updateDoc(page, {
         content: content || null,
@@ -147,4 +157,19 @@ const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: Update
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPage, getSubPage }
+const updateSubPage = async ({ id, idPage, title, subtitle, content }: UpdatePageInterface) => {
+    if (!content || !id) return null
+
+    const page = doc(db, 'sub-page', id)
+
+    await updateDoc(page, {
+        content: content || null,
+        idPage: idPage || null,
+        title: title || null,
+        subtitle: subtitle || null
+    })
+
+    return page
+}
+
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPage, getSubPage, updateSubPage }
