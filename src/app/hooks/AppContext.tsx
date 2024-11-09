@@ -20,7 +20,7 @@ type typeAccountUser = {
 
 type AppContextProps = {
   setInforPage: Dispatch<any>
-  inforPage: PagesInterface
+  inforPage: PagesInterface | any
   resertInforPage: () => void
   pages: PagesInterface[]
   setPages: Dispatch<any>
