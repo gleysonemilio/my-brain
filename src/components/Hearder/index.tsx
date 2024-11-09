@@ -13,12 +13,12 @@ import Image from 'next/image'
 
 import { SearchBook } from '../SeachBook'
 
-export const Hearder = () => {
+export const Hearder = ({ getUpdatePage }: { getUpdatePage: () => void }) => {
   return (
     <div className="flex justify-between gap-2 p-2">
-      <div className="flex items-center">
+      <button className="flex items-center" onClick={getUpdatePage}>
         <Image src={LogoBrain} width={70} height={50} alt="Picture of the author" />
-      </div>
+      </button>
       <div className="h-full">
         <Sheet>
           <SheetTrigger className="w-[100%]">
