@@ -3,7 +3,7 @@
 import { useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { updatePageOfUser } from '@/firebase/Api'
+import { updatePageOfUser, updateSubPage } from '@/firebase/Api'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
@@ -82,16 +82,49 @@ const Tiptap = () => {
   } as EditorOptions)
 
   const UpadatePage = async () => {
-    await updatePageOfUser({ ...inforPage, id: inforPage.id as string, content: newPage as string })
+    console.log({ ...inforPage, id: inforPage.id as string, content: newPage as string })
 
-    setPages(
-      pages.map((ele) => {
-        if (ele.id === inforPage.id) {
-          return { ...inforPage, content: newPage as string }
+    if (inforPage.idUser) {
+      await updatePageOfUser({
+        ...inforPage,
+        id: inforPage.id as string,
+        content: newPage as string
+      })
+
+      setPages(
+        pages.map((ele) => {
+          if (ele.id === inforPage.id) {
+            return { ...inforPage, content: newPage as string }
+          }
+          return ele
+        })
+      )
+    }
+
+    if (inforPage.idPage) {
+      await updateSubPage({
+        ...inforPage,
+        id: inforPage.id as string,
+        content: newPage as string
+      })
+
+      const newArray = pages.map((ele) => {
+        if (ele.id === inforPage.idPage) {
+          if (ele.subPages) {
+            return {
+              ...ele,
+              subPages: ele.subPages.map((subPage: any) =>
+                subPage.id === inforPage.id ? { ...inforPage, content: newPage as string } : subPage
+              )
+            }
+          }
         }
         return ele
       })
-    )
+
+      setPages(newArray)
+    }
+
     setNeedSave(false)
   }
 
