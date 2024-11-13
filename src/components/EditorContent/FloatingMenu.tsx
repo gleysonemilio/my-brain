@@ -64,7 +64,6 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       shouldShow={({ state }) => {
         const { $from } = state.selection
 
-        console.log(`$from`, $from.nodeBefore?.textContent)
         const currentLineText = $from.nodeBefore?.textContent
 
         return currentLineText === '/'
