@@ -3,7 +3,7 @@
 import { useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { updatePageOfUser, updateSubPage } from '@/firebase/Api'
+import { deleterPageOfUser, deleterSubPage, updatePageOfUser, updateSubPage } from '@/firebase/Api'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
@@ -81,7 +81,7 @@ const Tiptap = () => {
     }
   } as EditorOptions)
 
-  const UpadatePage = async () => {
+  const upadatePage = async () => {
     console.log({ ...inforPage, id: inforPage.id as string, content: newPage as string })
 
     if (inforPage.idUser) {
@@ -92,12 +92,9 @@ const Tiptap = () => {
       })
 
       setPages(
-        pages.map((ele) => {
-          if (ele.id === inforPage.id) {
-            return { ...inforPage, content: newPage as string }
-          }
-          return ele
-        })
+        pages.map((ele) =>
+          ele.id === inforPage.id ? { ...inforPage, content: newPage as string } : ele
+        )
       )
     }
 
@@ -108,24 +105,32 @@ const Tiptap = () => {
         content: newPage as string
       })
 
-      const newArray = pages.map((ele) => {
-        if (ele.id === inforPage.idPage) {
-          if (ele.subPages) {
-            return {
+      const newArray = pages.map((ele) =>
+        ele.id === inforPage.idPage && ele.subPages
+          ? {
               ...ele,
               subPages: ele.subPages.map((subPage: any) =>
                 subPage.id === inforPage.id ? { ...inforPage, content: newPage as string } : subPage
               )
             }
-          }
-        }
-        return ele
-      })
+          : ele
+      )
 
       setPages(newArray)
     }
 
     setNeedSave(false)
+  }
+
+  const deletePageUser = async () => {
+    if (inforPage.idPage) {
+      return await deleterSubPage(inforPage.id as string)
+    }
+    await deleterPageOfUser(inforPage.id as string)
+
+    const newArray = pages.filter((element) => element.id !== inforPage.id)
+
+    return setPages(newArray)
   }
 
   useEffect(() => {
@@ -141,7 +146,11 @@ const Tiptap = () => {
           {inforPage?.emoji || ''}
           {inforPage.title}
         </h1>
-        <Button variant="secondary" className="absolute right-6 top-28 p-5">
+        <Button
+          variant="secondary"
+          className="absolute right-6 top-28 p-5"
+          onClick={deletePageUser}
+        >
           <Trash color="#7b7b81" width={16} />
         </Button>
       </div>
@@ -163,7 +172,7 @@ const Tiptap = () => {
           </div>
           <AlertTitle>Your page is not saved!</AlertTitle>
           <AlertDescription>
-            <Button size="sm" onClick={() => UpadatePage()}>
+            <Button size="sm" onClick={() => upadatePage()}>
               Save
             </Button>
           </AlertDescription>
