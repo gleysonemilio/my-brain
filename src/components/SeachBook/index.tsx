@@ -28,7 +28,7 @@ export interface SubPagesInterface {
 }
 
 export const SearchBook = () => {
-  const { setInforPage, resertInforPage, pages, setPages, account } = useAppContext()
+  const { setInforPage, resertInforPage, pages, setPages, account, inforPage } = useAppContext()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,17 +101,16 @@ export const SearchBook = () => {
   }
 
   const ReturnListPapers = () => {
-    const [open, setOpen] = useState(false)
     return (
       pages.length > 0 && (
-        <Command className="h-full mt-3 rounded-lg shadow-md bg-zinc-200">
+        <Command className="h-full mt-3 rounded-lg shadow-md ">
           <CommandList className="max-h-full">
             <CommandGroup>
               {pages.map((ele) => (
                 <>
                   <CommandItem
                     key={ele.id}
-                    className="flex flex-row justify-between cursor-pointer items-start"
+                    className={`flex flex-row justify-between cursor-pointer items-start mb-1 ${ele.id === inforPage.id && 'bg-zinc-800'}`}
                   >
                     <CommandTitle {...ele} />
 
@@ -126,7 +125,7 @@ export const SearchBook = () => {
                     ele.subPages.map((subPage: any) => (
                       <CommandItem
                         key={subPage.id}
-                        className="ml-4 rounded-none border-l-2 border-zinc-800"
+                        className={`ml-4 rounded-none border-l-2 cursor-pointer mb-[0.5px] border-zinc-800 ${subPage.id === inforPage.id && 'bg-zinc-800'}`}
                       >
                         <CommandTitle {...subPage} />
                       </CommandItem>
