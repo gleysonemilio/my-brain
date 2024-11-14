@@ -128,7 +128,12 @@ async function deleterUser(id: string) {
     await deleteDoc(userDoc)
 }
 
-async function deleterPage(id: string) {
+async function deleterPageOfUser(id: string) {
+    const userDoc = await doc(db, 'page', id)
+    await deleteDoc(userDoc)
+}
+
+async function deleterSubPage(id: string) {
     const userDoc = await doc(db, 'sub-page', id)
     await deleteDoc(userDoc)
 }
@@ -172,4 +177,4 @@ const updateSubPage = async ({ id, idPage, title, subtitle, content }: UpdatePag
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPage, getSubPage, updateSubPage }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage }
