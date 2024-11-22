@@ -40,50 +40,54 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       value: 'paragraph',
       ariaLabel: 'Toggle paragraph',
       onClick: () => editor.chain().focus().setParagraph().run(),
-      Icon: <TextIcon className="h-4 w-4" />
+      Icon: <TextIcon />
     },
     {
       value: 'bold',
       ariaLabel: 'Toggle bold',
       onClick: () => editor.chain().focus().toggleBold().run(),
-      Icon: <FontBoldIcon className="h-4 w-4" />
+      Icon: <FontBoldIcon />
     },
     {
       value: 'italic',
       ariaLabel: 'Toggle italic',
       onClick: () => editor.chain().focus().toggleItalic().run(),
-      Icon: <FontItalicIcon className="h-4 w-4" />
+      Icon: <FontItalicIcon />
     },
     {
       value: 'strikethrough',
       ariaLabel: 'Toggle strikethrough',
       onClick: () => editor.chain().focus().toggleStrike().run(),
-      Icon: <StrikethroughIcon className="h-4 w-4" />
+      Icon: <StrikethroughIcon />
     },
     {
       value: 'codeBlock',
       ariaLabel: 'Toggle code block',
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-      Icon: <CodeIcon className="h-4 w-4" />
+      Icon: <CodeIcon />
     },
     {
       value: 'setLink',
       ariaLabel: 'Set Link',
       onClick: () => setLink(),
       className: editor?.isActive('link') ? 'is-active' : '',
-      Icon: <Link2 className="h-4 w-4" />
+      Icon: <Link2 />
     },
     {
       value: 'unsetlink',
       ariaLabel: 'Unset link',
       onClick: () => editor?.chain().focus().unsetLink().run(),
       className: editor?.isActive('link') ? 'is-active' : '',
-      Icon: <Link2Off className="h-4 w-4" />,
+      Icon: <Link2Off />,
       disabled: !editor?.isActive('link')
     }
   ]
 
   const toggleGroupItemsColor = [
+    {
+      color: '#FFF',
+      value: 'unsetColor'
+    },
     {
       color: '#958DF1',
       value: 'setPurple'
@@ -93,22 +97,21 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       value: 'setRed'
     },
     {
-      color: '#FFF',
-      value: 'unsetColor'
+      color: '#ffc83d',
+      value: 'setYellow'
     }
   ]
 
   return (
-    <BubbleMenu className="rounded-md bg-zinc-950" editor={editor} tippyOptions={{ duration: 100 }}>
-      <ToggleGroup type="multiple" className="gap-0 p-1">
-        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon, className, disabled }, index) => (
+    <BubbleMenu className="flex bg-zinc-950" editor={editor} tippyOptions={{ duration: 100 }}>
+      <ToggleGroup type="multiple" className="flex gap-0 p-1 rounded-md bg-zinc-950">
+        {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon, className }, index) => (
           <ToggleGroupItem
             key={index}
             value={value}
             aria-label={ariaLabel}
             onClick={onClick}
             className={className || ''}
-            disabled={disabled || false}
           >
             {Icon}
           </ToggleGroupItem>

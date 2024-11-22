@@ -82,8 +82,6 @@ const Tiptap = () => {
   } as EditorOptions)
 
   const upadatePage = async () => {
-    console.log({ ...inforPage, id: inforPage.id as string, content: newPage as string })
-
     if (inforPage.idUser) {
       await updatePageOfUser({
         ...inforPage,
@@ -122,7 +120,7 @@ const Tiptap = () => {
     setNeedSave(false)
   }
 
-  const deletePageUser = async () => {
+  const deletePageOfUser = async () => {
     if (inforPage.idPage) {
       return await deleterSubPage(inforPage.id as string)
     }
@@ -149,7 +147,7 @@ const Tiptap = () => {
         <Button
           variant="secondary"
           className="absolute right-6 top-28 p-5"
-          onClick={deletePageUser}
+          onClick={deletePageOfUser}
         >
           <Trash color="#7b7b81" width={16} />
         </Button>
