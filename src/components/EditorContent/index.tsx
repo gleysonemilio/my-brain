@@ -3,7 +3,13 @@
 import { useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { deleterPageOfUser, deleterSubPage, updatePageOfUser, updateSubPage } from '@/firebase/Api'
+import {
+  deleterPageOfUser,
+  deleterSubPage,
+  sharePageWirhFriend,
+  updatePageOfUser,
+  updateSubPage
+} from '@/firebase/Api'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
@@ -16,7 +22,7 @@ import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
 import { all, common, createLowlight } from 'lowlight'
-import { Trash } from 'lucide-react'
+import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { BubbleMenuComponents } from './BubbleMenu'
@@ -131,6 +137,13 @@ const Tiptap = () => {
     return setPages(newArray)
   }
 
+  // const sharePagerWithFriend = async () => {
+  //   console.log('chegouuu')
+  //   await sharePageWirhFriend(inforPage.id, 'gleysons@ciandt.com')
+
+  //   return ``
+  // }
+
   useEffect(() => {
     if (needSave) return
 
@@ -144,13 +157,16 @@ const Tiptap = () => {
           {inforPage?.emoji || ''}
           {inforPage.title}
         </h1>
-        <Button
-          variant="secondary"
-          className="absolute right-6 top-28 p-5"
-          onClick={deletePageOfUser}
-        >
-          <Trash color="#7b7b81" width={16} />
-        </Button>
+
+        <div className="flex gap-1 absolute right-6 top-28">
+          {/* <Button variant="secondary" onClick={sharePagerWithFriend}>
+            <Users color="#7b7b81" width={16} />
+          </Button> */}
+
+          <Button variant="secondary" onClick={deletePageOfUser}>
+            <Trash color="#7b7b81" width={16} />
+          </Button>
+        </div>
       </div>
 
       <EditorContent className="prose prose-invert mx-auto max-w-[700px] pt-16" editor={editor} />
