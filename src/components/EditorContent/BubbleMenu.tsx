@@ -15,6 +15,10 @@ interface BubbleMenuComponents {
 }
 
 export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
+  if (!editor) {
+    return null
+  }
+
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes('link').href
     const url = window.prompt('URL', previousUrl)
@@ -64,7 +68,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       value: 'codeBlock',
       ariaLabel: 'Toggle code block',
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-      className: editor.isActive('codeBlock') ? 'is-active' : '',
+      className: editor?.isActive('codeBlock') ? 'is-active' : '',
       Icon: <CodeIcon />
     },
     {
