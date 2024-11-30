@@ -1,6 +1,5 @@
 'use client'
 
-import { useAppContext } from '@/app/hooks/AppContext'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,29 +8,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { signInWithOutPopupFirebase } from '@/firebase/Api'
 import { deleteCookie } from 'cookies-next'
 import { EllipsisIcon, EllipsisVerticalIcon, LogInIcon, User2Icon } from 'lucide-react'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import { ComponentProfile } from '../ComponentProfile'
 
 export const DropdownLogout = () => {
   const router = useRouter()
-  const { account } = useAppContext()
 
-  const { displayName, photoURL, email, uid } = account
-
-  const decodedImageUrl = (name: string) => decodeURIComponent(name as string)
-
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     ;['photoURL', 'photoURL', 'uid', 'email', 'displayName'].forEach((key) => deleteCookie(key))
+
+    await signInWithOutPopupFirebase()
 
     return router.push('/')
   }
 
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger>
         <ComponentProfile icon background />
       </DropdownMenuTrigger>
