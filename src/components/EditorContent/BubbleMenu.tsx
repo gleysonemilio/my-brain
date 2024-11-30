@@ -64,6 +64,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       value: 'codeBlock',
       ariaLabel: 'Toggle code block',
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+      className: editor.isActive('codeBlock') ? 'is-active' : '',
       Icon: <CodeIcon />
     },
     {
@@ -103,7 +104,11 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
   ]
 
   return (
-    <BubbleMenu className="flex rounded-md bg-zinc-950" editor={editor} tippyOptions={{ duration: 100 }}>
+    <BubbleMenu
+      className="flex rounded-md bg-zinc-950"
+      editor={editor}
+      tippyOptions={{ duration: 100 }}
+    >
       <ToggleGroup type="multiple" className="flex gap-1 p-1 rounded-md bg-zinc-950">
         {toggleGroupItems.map(({ ariaLabel, onClick, value, Icon, className }, index) => (
           <ToggleGroupItem
