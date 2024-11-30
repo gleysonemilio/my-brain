@@ -13,8 +13,8 @@ interface Node {
 
 interface EditorObject {
   node: Node
-  updateAttributes: (attrs: Partial<NodeAttributes>) => void 
-  extension: any 
+  updateAttributes: (attrs: Partial<NodeAttributes>) => void
+  extension: any
 }
 
 export default ({
