@@ -12,7 +12,7 @@ import {
     query,
     where
 } from 'firebase/firestore'
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { setCookie } from 'cookies-next';
 import { firebaseapp } from './initializeApp';
 
@@ -22,6 +22,8 @@ const auth = getAuth(firebaseapp)
 const userCollectionRef = collection(db, 'user')
 const pageCollectionRef = collection(db, 'page')
 const subPageCollectionRef = collection(db, 'sub-page')
+const subPageSharedPagesCollectionRef = collection(db, 'shared-pages')
+
 const provider = new GoogleAuthProvider()
 
 export interface UpdatePageInterface {
@@ -63,6 +65,16 @@ const signInWithPopupFirebase = async () => {
     })
 }
 
+const signInWithOutPopupFirebase = async () => {
+    await signOut(auth)
+        .then(() => {
+            console.log('Signed Out');
+        })
+        .catch(e => {
+            console.error('Sign Out Error', e);
+        });
+}
+
 const getUser = async () => {
     const data = await getDocs(userCollectionRef)
     return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -71,6 +83,13 @@ const getUser = async () => {
 const getPagesOfUser = async (idUser: string) => {
     const searchPageUser = query(pageCollectionRef, where("idUser", "==", idUser));
     const data = await getDocs(searchPageUser);
+
+    return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+}
+
+const getPagesSharedByOtherUser = async (idUser: string) => {
+    const searchPagesSharedByOtherUser = query(subPageSharedPagesCollectionRef, where("idUser", "==", idUser));
+    const data = await getDocs(searchPagesSharedByOtherUser);
 
     return data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 }
@@ -121,6 +140,32 @@ const createSubPage = async ({ idPage, title, subtitle, emoji }: SubPagesInterfa
     })
 
     return subPage
+}
+
+
+const sharePageWirhFriend = async ({ idPage, idUser }: any) => {
+    // if (!idUser || !idPage) return null
+    console.log('cheouuu brasikl')
+    // await getAuth(firebaseapp).getUserByEmail('gleysonemilio@gmail.com')
+    //     .then((userRecord) => {
+    //         // See the UserRecord reference doc for the contents of userRecord.
+    //         console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
+    //     })
+    //     .catch((error) => {
+    //         console.log('Error fetching user data:', error);
+    //     });
+    // await fetchProvidersForEmail('gleysonemilio@gmail.com')
+    //     .then(data => {
+    //         console.log('auth', auth)
+    //         console.log('data-->', data)
+
+    //         if (data.length === 0) {
+
+    //         } else {
+    //             // has signed up
+    //         }
+    //         return ''
+    //     })
 }
 
 async function deleterUser(id: string) {
@@ -177,4 +222,4 @@ const updateSubPage = async ({ id, idPage, title, subtitle, content }: UpdatePag
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage, getPagesSharedByOtherUser, signInWithOutPopupFirebase, sharePageWirhFriend }
