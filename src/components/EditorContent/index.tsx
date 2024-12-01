@@ -10,7 +10,7 @@ import {
   updatePageOfUser,
   updateSubPage
 } from '@/firebase/Api'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Document from '@tiptap/extension-document'
 import Link from '@tiptap/extension-link'
@@ -22,7 +22,7 @@ import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
-import { all, createLowlight } from 'lowlight'
+import { all, common, createLowlight } from 'lowlight'
 import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -63,14 +63,14 @@ const Tiptap = () => {
     extensions: [
       Document,
       Color,
-      StarterKit,
       TextStyle,
       Paragraph,
-      CodeBlockLowlight.extend({
-        addNodeView() {
-          return ReactNodeViewRenderer(CodeBlockComponent as any)
-        }
-      }).configure({ lowlight }),
+      CodeBlockLowlight.configure({
+        lowlight: createLowlight(common)
+      }),
+      StarterKit.configure({
+        codeBlock: false
+      }),
       Link.configure({
         openOnClick: true,
         autolink: true,
