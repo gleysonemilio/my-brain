@@ -64,11 +64,9 @@ const Tiptap = () => {
       StarterKit,
       TextStyle,
       Paragraph,
-      CodeBlockLowlight.extend({
-        addNodeView() {
-          return ReactNodeViewRenderer(CodeBlockComponent as any)
-        }
-      }).configure({ lowlight }),
+      CodeBlockLowlight.configure({
+        lowlight: createLowlight(common)
+      }),
       Link.configure({
         openOnClick: true,
         autolink: true,
