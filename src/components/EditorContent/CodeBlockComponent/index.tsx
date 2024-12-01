@@ -3,27 +3,29 @@ import React from 'react'
 
 import './CodeBlockComponent.css'
 
-interface NodeAttributes {
-  language: string
+export interface CodeBlockProps {
+  node: {
+    attrs: {
+      language: string // Linguagem padrão selecionada no bloco de código
+    }
+  }
+  updateAttributes: (attrs: { language: string }) => void // Função para atualizar os atributos do nó
+  extension: {
+    options: {
+      lowlight: {
+        listLanguages: () => string[] // Método para listar as linguagens suportadas
+      }
+    }
+  }
 }
 
-interface Node {
-  attrs: NodeAttributes
-}
-
-interface EditorObject {
-  node: Node
-  updateAttributes: (attrs: Partial<NodeAttributes>) => void
-  extension: any
-}
-
-export default ({
+const CodeBlockComponent: React.FC<CodeBlockProps> = ({
   node: {
     attrs: { language: defaultLanguage }
   },
   updateAttributes,
   extension
-}: EditorObject) => (
+}) => (
   <NodeViewWrapper className="code-block">
     <select
       contentEditable={false}
@@ -32,7 +34,7 @@ export default ({
     >
       <option value="null">auto</option>
       <option disabled>—</option>
-      {extension.options.lowlight.listLanguages().map((lang: any, index: any) => (
+      {extension.options.lowlight.listLanguages().map((lang, index) => (
         <option key={index} value={lang}>
           {lang}
         </option>
@@ -43,3 +45,5 @@ export default ({
     </pre>
   </NodeViewWrapper>
 )
+
+export default CodeBlockComponent
