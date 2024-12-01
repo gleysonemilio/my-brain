@@ -29,7 +29,7 @@ const CodeBlockComponent: React.FC<CodeBlockProps> = ({
 }) => {
   useEffect(() => {
     const blocks = document.querySelectorAll('pre code')
-    blocks.forEach(hljs.highlightBlock)
+    blocks.forEach(hljs.highlightBlock as any)
   }, [])
 
   return (
