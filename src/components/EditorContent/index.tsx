@@ -17,7 +17,7 @@ import Paragraph from '@tiptap/extension-paragraph'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, ReactNodeViewRenderer, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { all, common, createLowlight } from 'lowlight'
+import { all, createLowlight } from 'lowlight'
 import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
