@@ -34,7 +34,7 @@ const CodeBlockComponent: React.FC<CodeBlockProps> = ({
 
   return (
     <NodeViewWrapper className="code-block">
-      {console.log('defaultLanguage', defaultLanguage)}
+      {/* {console.log('defaultLanguage', defaultLanguage)}
       {console.log('extension', extension?.options?.lowlight.listLanguages())}
 
       <select
@@ -49,7 +49,7 @@ const CodeBlockComponent: React.FC<CodeBlockProps> = ({
             {lang}
           </option>
         ))}
-      </select>
+      </select> */}
       <pre>
         <NodeViewContent as="code" />
       </pre>
