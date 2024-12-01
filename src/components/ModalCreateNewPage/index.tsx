@@ -62,7 +62,13 @@ export const ModalCreateNewPage = ({
                 placeholder="Title"
                 onChange={(e) => setTitleNewPage(e.target.value)}
               />
-              <Button size="sm" onClick={() => ApiCreatePage(titleNewPage, emoji)}>
+              <Button
+                size="sm"
+                onClick={() => {
+                  ApiCreatePage(titleNewPage, emoji)
+                  setPopoverOpen(false)
+                }}
+              >
                 save
               </Button>
             </div>

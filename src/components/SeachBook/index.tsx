@@ -94,8 +94,12 @@ export const SearchBook = () => {
           }, 100)
         }}
       >
-        <span className="mr-1 h-4 w-4">{props?.emoji || '📑'}</span>
-        <span className="scroll-m-20 text-sm font-semibold tracking-tight">{props.title}</span>
+        <span className="mr-1">{props?.emoji || '📑'}</span>
+        <span
+          className={`scroll-m-20 text-sm  tracking-tight ${props.selected && 'font-semibold'}`}
+        >
+          {props.title}
+        </span>
       </div>
     )
   }
@@ -110,9 +114,9 @@ export const SearchBook = () => {
                 <>
                   <CommandItem
                     key={ele.id}
-                    className={`flex flex-row justify-between cursor-pointer items-start mb-1 ${ele.id === inforPage.id && 'bg-zinc-800'}`}
+                    className={`p-[3px] flex flex-row justify-between cursor-pointer items-start ${ele.id === inforPage.id && 'bg-zinc-800'}`}
                   >
-                    <CommandTitle {...ele} />
+                    <CommandTitle {...ele} selected={ele.id === inforPage.id} />
 
                     <ModalCreateNewPage
                       title={`${ele.title} - Create New Sub Page `}
@@ -139,8 +143,31 @@ export const SearchBook = () => {
     )
   }
 
+  const ReturnListPapersShared = () => {
+    return (
+      pages.length > 0 && (
+        <Command className="rounded-lg shadow-md ">
+          <CommandList className="max-h-full">
+            <CommandGroup>
+              {pages.map((ele) => (
+                <>
+                  <CommandItem
+                    key={ele.id}
+                    className={`flex flex-row justify-between cursor-pointer items-start mb-1 ${ele.id === inforPage.id && 'bg-zinc-800'}`}
+                  >
+                    <CommandTitle {...ele} />
+                  </CommandItem>
+                </>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      )
+    )
+  }
+
   return (
-    <div className="h-full flex flex-col justify-between">
+    <div className="h-full flex flex-col">
       <div className="h-full">
         <div className="flex flex-row justify-between items-center">
           <span className="scroll-m-20 text-sm font-semibold tracking-tight">Books</span>
@@ -151,6 +178,8 @@ export const SearchBook = () => {
         </div>
         <ReturnListPapers />
       </div>
+      {/* <span className="scroll-m-20 text-sm font-semibold tracking-tight">Shared Pages</span>
+       <ReturnListPapersShared /> */}
 
       <DropdownLogout />
     </div>
