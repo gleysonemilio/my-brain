@@ -17,10 +17,6 @@ import Paragraph from '@tiptap/extension-paragraph'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, ReactNodeViewRenderer, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
 import { all, common, createLowlight } from 'lowlight'
 import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
@@ -48,11 +44,6 @@ interface EditorOptions {
 }
 const lowlight = createLowlight(all)
 
-lowlight.register('html', html)
-lowlight.register('css', css)
-lowlight.register('js', js)
-lowlight.register('ts', ts)
-
 const Tiptap = () => {
   const { inforPage, setPages, pages } = useAppContext()
   const [newPage, setNewPage] = useState<string>()
@@ -64,9 +55,11 @@ const Tiptap = () => {
       StarterKit,
       TextStyle,
       Paragraph,
-      CodeBlockLowlight.configure({
-        lowlight: createLowlight(common)
-      }),
+      CodeBlockLowlight.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlockComponent as any)
+        }
+      }).configure({ lowlight }),
       Link.configure({
         openOnClick: true,
         autolink: true,
