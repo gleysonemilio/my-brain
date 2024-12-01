@@ -42,19 +42,19 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       ActionButton: () => editor.chain().focus().toggleBulletList().run()
     },
     {
-      img: '',
+      img: 'https://www.notion.so/images/blocks/numbered-list.0406affe.png',
       title: 'Ordered List',
       subTitle: 'Create a simple Ordered list',
       isActive: 'orderedList',
       ActionButton: () => editor.chain().focus().toggleOrderedList().run()
-    },
-    {
-      img: '',
-      title: 'Hard break',
-      subTitle: 'Create a simple Hard break',
-      isActive: 'hardbreak',
-      ActionButton: () => editor.chain().focus().setHardBreak().run()
     }
+    // {
+    //   img: '',
+    //   title: 'Hard break',
+    //   subTitle: 'Create a simple Hard break',
+    //   isActive: 'hardbreak',
+    //   ActionButton: () => editor.chain().focus().setHardBreak().run()
+    // }
   ]
 
   return (
@@ -75,7 +75,7 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
           onClick={() => ActionButton()}
           className="flex min-w-[280px] items-center gap-2 p-1 hover:rounded hover:bg-zinc-800"
         >
-          <img src={img} alt="text" className="w-12 rounded border-zinc-600" />
+          <img src={img} alt="text" className="w-12 rounded border-zinc-600 bg-zinc-50" />
           <div className="flex flex-col text-left">
             <span className="text-sm text-zinc-100">{title}</span>
             <span className="text-xs text-zinc-500">{subTitle}</span>
