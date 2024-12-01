@@ -27,7 +27,6 @@ import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { BubbleMenuComponents } from './BubbleMenu'
-import CodeBlockComponent from './CodeBlockComponent'
 import { FloatingMenuComponent } from './FloatingMenu'
 import './styles.css'
 
