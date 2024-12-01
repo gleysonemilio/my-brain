@@ -16,7 +16,7 @@ import Document from '@tiptap/extension-document'
 import Link from '@tiptap/extension-link'
 import Paragraph from '@tiptap/extension-paragraph'
 import TextStyle from '@tiptap/extension-text-style'
-import { EditorContent, ReactNodeViewRenderer, useEditor } from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'
@@ -146,7 +146,7 @@ const Tiptap = () => {
   // }
 
   useEffect(() => {
-    if (needSave) return
+    if (typeof newPage === 'undefined') return
 
     setNeedSave(true)
   }, [newPage])
@@ -171,9 +171,8 @@ const Tiptap = () => {
       </div>
 
       <EditorContent className="prose prose-invert mx-auto max-w-[700px] pt-16" editor={editor} />
-      {BubbleMenuComponents({ editor })}
-      {FloatingMenuComponent({ editor })}
-      {/* https://tiptap.dev/docs/editor/extensions/marks/link */}
+      <BubbleMenuComponents editor={editor} />
+      <FloatingMenuComponent editor={editor} />
 
       {needSave && (
         <Alert
