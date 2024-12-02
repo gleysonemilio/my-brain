@@ -96,7 +96,7 @@ export const SearchBook = () => {
       >
         <span className="mr-1">{props?.emoji || '📑'}</span>
         <span
-          className={`scroll-m-20 text-sm  tracking-tight ${props.selected && 'font-semibold'}`}
+          className={`scroll-m-20 text-sm tracking-wider ${!props.selected ? 'text-zinc-400' : 'text-zinc-50 font-semibold'}`}
         >
           {props.title}
         </span>
@@ -131,7 +131,7 @@ export const SearchBook = () => {
                         key={subPage.id}
                         className={`ml-4 rounded-none border-l-2 cursor-pointer mb-[0.5px] border-zinc-800 ${subPage.id === inforPage.id && 'bg-zinc-800'}`}
                       >
-                        <CommandTitle {...subPage} />
+                        <CommandTitle {...subPage} selected={subPage.id === inforPage.id} />
                       </CommandItem>
                     ))}
                 </>
@@ -143,28 +143,28 @@ export const SearchBook = () => {
     )
   }
 
-  const ReturnListPapersShared = () => {
-    return (
-      pages.length > 0 && (
-        <Command className="rounded-lg shadow-md ">
-          <CommandList className="max-h-full">
-            <CommandGroup>
-              {pages.map((ele) => (
-                <>
-                  <CommandItem
-                    key={ele.id}
-                    className={`flex flex-row justify-between cursor-pointer items-start mb-1 ${ele.id === inforPage.id && 'bg-zinc-800'}`}
-                  >
-                    <CommandTitle {...ele} />
-                  </CommandItem>
-                </>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      )
-    )
-  }
+  // const ReturnListPapersShared = () => {
+  //   return (
+  //     pages.length > 0 && (
+  //       <Command className="rounded-lg shadow-md ">
+  //         <CommandList className="max-h-full">
+  //           <CommandGroup>
+  //             {pages.map((ele) => (
+  //               <>
+  //                 <CommandItem
+  //                   key={ele.id}
+  //                   className={`flex flex-row justify-between cursor-pointer items-start mb-1 ${ele.id === inforPage.id && 'bg-zinc-800'}`}
+  //                 >
+  //                   <CommandTitle {...ele} />
+  //                 </CommandItem>
+  //               </>
+  //             ))}
+  //           </CommandGroup>
+  //         </CommandList>
+  //       </Command>
+  //     )
+  //   )
+  // }
 
   return (
     <div className="h-full flex flex-col">
