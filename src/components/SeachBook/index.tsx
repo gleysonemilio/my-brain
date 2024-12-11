@@ -96,7 +96,7 @@ export const SearchBook = () => {
       >
         <span className="mr-1">{props?.emoji || '📑'}</span>
         <span
-          className={`scroll-m-20 text-sm tracking-wider ${!props.selected ? 'text-zinc-400' : 'text-zinc-50 font-semibold'}`}
+          className={`scroll-m-20 text-sm tracking-wider ${!props.selected ? 'text-zinc-400' : 'text-white font-semibold'}`}
         >
           {props.title}
         </span>
