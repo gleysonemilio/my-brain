@@ -15,6 +15,7 @@ import { Color } from '@tiptap/extension-color'
 import Document from '@tiptap/extension-document'
 import Link from '@tiptap/extension-link'
 import Paragraph from '@tiptap/extension-paragraph'
+import Placeholder from '@tiptap/extension-placeholder'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -74,6 +75,10 @@ const Tiptap = () => {
         openOnClick: true,
         autolink: true,
         defaultProtocol: 'https'
+      }),
+      Placeholder.configure({
+        placeholder: `Write something, or press '/' for commmand... `,
+        emptyEditorClass: 'is-editor-empty'
       })
     ],
     content: inforPage?.content,
