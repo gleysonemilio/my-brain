@@ -47,6 +47,14 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       subTitle: 'Create a simple Ordered list',
       isActive: 'orderedList',
       ActionButton: () => editor.chain().focus().toggleOrderedList().run()
+    },
+    {
+      img: '',
+      title: 'Insert table',
+      subTitle: 'Create a simple Ordered list',
+      isActive: 'insertTable',
+      ActionButton: () =>
+        editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
     }
     // {
     //   img: '',
