@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { signInWithPopupFirebase } from '@/firebase/Api'
 import { getCookie } from 'cookies-next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -43,7 +44,17 @@ export default function Page() {
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 h-[100vh]">
       <div className=" bg-zinc-900 md:flex md:col-span-1 sm:hidden">
-        <div className="p-9">{ImgLogo('animate-pulse')}</div>
+        <div className="flex justify-between direction-normal flex-col p-9">
+          {ImgLogo('animate-pulse')}
+
+          <p className="px-8 text-center text-sm text-muted-foreground text-[#323234]">
+            © developed by{' '}
+            <Link className=' animate-pulse' href="https://www.linkedin.com/in/gleysonsilva/" target="_blank">
+              Gleyson
+            </Link>{' '}
+            this 2024
+          </p>
+        </div>
       </div>
 
       <div className="col-span-1 sm:justify-evenly md:justify-center flex flex-col items-center gap-11">
