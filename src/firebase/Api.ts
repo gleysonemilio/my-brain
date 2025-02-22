@@ -15,6 +15,7 @@ import {
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { setCookie } from 'cookies-next';
 import { firebaseapp } from './initializeApp';
+import { fetchSignInMethodsForEmail } from "firebase/auth";
 
 
 const db = getFirestore(firebaseapp)
@@ -168,6 +169,24 @@ const sharePageWirhFriend = async ({ idPage, idUser }: any) => {
     //     })
 }
 
+const checkEmailExists = async (email: string) => {
+    try {
+        const authh = getAuth();
+
+
+        console.log('emai', email)
+        console.log('authh', authh)
+
+        const signInMethods = await fetchSignInMethodsForEmail(authh, 'gleysons@ciandt.com');
+
+        console.log('=>', signInMethods)
+        return signInMethods.length > 0; // Retorna true se o e-mail já estiver cadastrado
+    } catch (error) {
+        console.error("Erro ao verificar e-mail:", error);
+        return false;
+    }
+};
+
 async function deleterUser(id: string) {
     const userDoc = await doc(db, 'user', id)
     await deleteDoc(userDoc)
@@ -222,4 +241,4 @@ const updateSubPage = async ({ id, idPage, title, subtitle, content }: UpdatePag
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage, getPagesSharedByOtherUser, signInWithOutPopupFirebase, sharePageWirhFriend }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage, getPagesSharedByOtherUser, signInWithOutPopupFirebase, sharePageWirhFriend, checkEmailExists }
