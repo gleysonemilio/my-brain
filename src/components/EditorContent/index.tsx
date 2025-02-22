@@ -4,7 +4,6 @@ import { useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
-  checkEmailExists,
   deleterPageOfUser,
   deleterSubPage,
   sharePageWirhFriend,
@@ -144,18 +143,6 @@ const Tiptap = () => {
     return setPages(newArray)
   }
 
-  const sharePagerWithFriend = async () => {
-    await checkEmailExists('gleysonemilio@gmail.com').then((exists) => {
-      if (exists) {
-        console.log('O e-mail já está cadastrado.')
-      } else {
-        console.log('O e-mail não está cadastrado.')
-      }
-    })
-
-    return ``
-  }
-
   useEffect(() => {
     if (typeof newPage === 'undefined') return
 
@@ -171,13 +158,9 @@ const Tiptap = () => {
         </h1>
 
         <div className="flex gap-1 absolute right-6 top-28">
-          <Button variant="secondary" onClick={sharePagerWithFriend}>
-            <Users color="#7b7b81" width={16} />
-          </Button>
-
-          {/* <Button variant="secondary" onClick={deletePageOfUser}>
+          <Button variant="secondary" onClick={deletePageOfUser}>
             <Trash color="#7b7b81" width={16} />
-          </Button> */}
+          </Button>
         </div>
       </div>
 
