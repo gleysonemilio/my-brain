@@ -2,9 +2,19 @@
 
 import { useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
-  checkEmailExists,
   deleterPageOfUser,
   deleterSubPage,
   sharePageWirhFriend,
@@ -144,16 +154,32 @@ const Tiptap = () => {
     return setPages(newArray)
   }
 
-  const sharePagerWithFriend = async () => {
-    await checkEmailExists('gleysonemilio@gmail.com').then((exists) => {
-      if (exists) {
-        console.log('O e-mail já está cadastrado.')
-      } else {
-        console.log('O e-mail não está cadastrado.')
-      }
-    })
-
-    return ``
+  const ModalOpenDeletePage = () => {
+    return (
+      <AlertDialog>
+        <AlertDialogTrigger>
+          <Button variant="secondary">
+            <Trash color="#7b7b81" width={16} />
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Do you want to delete the page '{inforPage.title}' ? 😭
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This page will be permanently deleted if you click yes
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="w-full">
+            <AlertDialogCancel className="w-full">No</AlertDialogCancel>
+            <AlertDialogAction className="w-full" onClick={deletePageOfUser}>
+              Yes
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    )
   }
 
   useEffect(() => {
@@ -171,13 +197,7 @@ const Tiptap = () => {
         </h1>
 
         <div className="flex gap-1 absolute right-6 top-28">
-          <Button variant="secondary" onClick={sharePagerWithFriend}>
-            <Users color="#7b7b81" width={16} />
-          </Button>
-
-          {/* <Button variant="secondary" onClick={deletePageOfUser}>
-            <Trash color="#7b7b81" width={16} />
-          </Button> */}
+          <ModalOpenDeletePage />
         </div>
       </div>
 
