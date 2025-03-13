@@ -1,4 +1,5 @@
 import { FloatingMenu } from '@tiptap/react'
+import { Heading1, ListChecks } from 'lucide-react'
 
 interface FloatingMenuInterface {
   editor: any
@@ -49,13 +50,20 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       ActionButton: () => editor.chain().focus().toggleOrderedList().run()
     },
     {
-      img: '',
-      title: 'Insert table',
-      subTitle: 'Create a simple Ordered list',
-      isActive: 'insertTable',
-      ActionButton: () =>
-        editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+      img: <ListChecks color="black" />,
+      title: 'Task List',
+      subTitle: 'Create a simple Task List',
+      isActive: 'taskList',
+      ActionButton: () => editor.chain().focus().toggleTaskList().run()
     }
+    // {
+    //   img: '',
+    //   title: 'Insert table',
+    //   subTitle: 'Create a simple Ordered list',
+    //   isActive: 'insertTable',
+    //   ActionButton: () =>
+    //     editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+    // }
     // {
     //   img: '',
     //   title: 'Hard break',
@@ -83,7 +91,13 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
           onClick={() => ActionButton()}
           className="flex min-w-[280px] items-center gap-2 p-1 hover:rounded hover:bg-zinc-800"
         >
-          <img src={img} alt="text" className="w-12 rounded border-zinc-600 bg-zinc-50" />
+          {typeof img === 'string' ? (
+            <img src={img} alt="text" className="w-12 rounded border-zinc-600 bg-zinc-50" />
+          ) : (
+            <div className="w-12 h-12 rounded border-zinc-600 bg-zinc-50 flex justify-center items-center">
+              {img}
+            </div>
+          )}
           <div className="flex flex-col text-left">
             <span className="text-sm text-zinc-100">{title}</span>
             <span className="text-xs text-zinc-500">{subTitle}</span>
