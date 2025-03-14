@@ -5,6 +5,8 @@ import LogoBrain from '@/assets/logo-brain-1.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { signInWithPopupFirebase } from '@/firebase/Api'
+import LinkPreview from '@ashwamegh/react-link-preview'
+import '@ashwamegh/react-link-preview/dist/index.css'
 import { getCookie } from 'cookies-next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -40,6 +42,27 @@ export default function Page() {
   useEffect(() => {
     if (getCookie('uid')) return router.push('/my-book')
   }, [])
+  function fn(text, count) {
+    return text.slice(0, count) + (text.length > count ? '...' : '')
+  }
+
+  function CustomComponent({ loading, preview }) {
+    console.log(preview)
+    return loading ? (
+      <h1>Loading...</h1>
+    ) : (
+      <div className="flex gap-1">
+        <img height="90px" width="90px" src={preview.img} alt={preview.title} />
+        <div className="flex flex-col">
+          <small className="text-sm font-semibold">{preview.domain}</small>
+          <p className="text-sm text-muted-foreground">{preview.title}</p>
+          <p className="text-sm text-muted-foreground text-[#323234]">
+            {fn(preview.description, 30)}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 h-[100vh]">
@@ -49,7 +72,11 @@ export default function Page() {
 
           <p className="px-8 text-center text-sm text-muted-foreground text-[#323234]">
             © developed by{' '}
-            <Link className=' animate-pulse' href="https://www.linkedin.com/in/gleysonsilva/" target="_blank">
+            <Link
+              className=" animate-pulse"
+              href="https://www.linkedin.com/in/gleysonsilva/"
+              target="_blank"
+            >
               Gleyson
             </Link>{' '}
             this 2024
@@ -86,6 +113,16 @@ export default function Page() {
               <Image width={15} alt="Icon Google" src={IconGoogle} />
               Google
             </Button>
+            <LinkPreview
+              url="https://www.youtube.com/watch?v=_QuvqK8Lqwg&ab_channel=BK%27"
+              customDomain="https://www.youtube.com/watch?v=_QuvqK8Lqwg&ab_channel=BK%27"
+              render={CustomComponent}
+            />
+            ---
+            <LinkPreview
+              url="https://dev.to/rahulj9a/how-to-build-simple-link-preview-without-any-library-in-js-2j84"
+              maxWidth={`1000px`}
+            />
           </div>
           <p className="px-8 text-center text-sm text-muted-foreground text-zinc-700">
             By clicking continue, you agree to our Terms <br /> of Service and Privacy Policy.
