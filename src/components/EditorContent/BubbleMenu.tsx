@@ -4,6 +4,7 @@ import {
   ALargeSmall,
   Bold,
   CodeXml,
+  Highlighter,
   Italic,
   Link2,
   Link2Off,
@@ -109,6 +110,15 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
       Icon: <ListChecks size={15} />,
       disabled: !editor?.isActive('taskList'),
       msg: 'Task List'
+    },
+    {
+      value: 'highlight',
+      ariaLabel: 'Highlight',
+      onClick: () => editor.chain().focus().toggleHighlight().run(),
+      Icon: <Highlighter size={15} />,
+      className: editor?.isActive('highlight') ? 'is-active' : '',
+      disabled: !editor?.isActive('highlight'),
+      msg: 'Highlight'
     }
   ]
 
@@ -184,7 +194,7 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
                 : editor.chain().focus().setColor(color).run()
             }
           >
-            <Type color={color} size={16} className={`border border-[${color}]  rounded-sm `} />
+            <Type color={color} size={16} />
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
