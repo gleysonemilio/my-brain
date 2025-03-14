@@ -1,11 +1,23 @@
 import { FloatingMenu } from '@tiptap/react'
-import { Heading1, ListChecks } from 'lucide-react'
+import { Heading1, ListChecks, Youtube, ListOrdered } from 'lucide-react'
 
 interface FloatingMenuInterface {
   editor: any
 }
 
 export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL')
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+        width: Math.max(320, 700) || 640,
+        height: Math.max(180, 250) || 480
+      })
+    }
+  }
+
   const floatingGoupItem = [
     {
       img: 'https://www.notion.so/images/blocks/header.57a7576a.png',
@@ -55,6 +67,13 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       subTitle: 'Create a simple Task List',
       isActive: 'taskList',
       ActionButton: () => editor.chain().focus().toggleTaskList().run()
+    },
+    {
+      img: <Youtube  color="black" />,
+      title: 'Youtube',
+      subTitle: 'Create a link Youtube',
+      isActive: 'taskList',
+      ActionButton: () => addYoutubeVideo()
     }
     // {
     //   img: '',
