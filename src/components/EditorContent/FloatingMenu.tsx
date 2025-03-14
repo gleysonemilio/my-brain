@@ -1,5 +1,5 @@
 import { FloatingMenu } from '@tiptap/react'
-import { Heading1, ListChecks, Youtube, ListOrdered } from 'lucide-react'
+import { Heading1, ListChecks, ListOrdered, Youtube } from 'lucide-react'
 
 interface FloatingMenuInterface {
   editor: any
@@ -69,7 +69,7 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       ActionButton: () => editor.chain().focus().toggleTaskList().run()
     },
     {
-      img: <Youtube  color="black" />,
+      img: <Youtube color="black" />,
       title: 'Youtube',
       subTitle: 'Create a link Youtube',
       isActive: 'taskList',

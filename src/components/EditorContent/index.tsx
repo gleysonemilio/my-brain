@@ -74,8 +74,6 @@ const Tiptap = () => {
   const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
-
-
   const editor = useEditor({
     extensions: [
       Document,

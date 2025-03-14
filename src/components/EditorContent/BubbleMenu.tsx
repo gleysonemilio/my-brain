@@ -4,14 +4,14 @@ import {
   ALargeSmall,
   Bold,
   CodeXml,
+  Highlighter,
   Italic,
   Link2,
   Link2Off,
   ListChecks,
   Paintbrush,
   Strikethrough,
-  Type,
-  Highlighter 
+  Type
 } from 'lucide-react'
 import { useCallback } from 'react'
 
