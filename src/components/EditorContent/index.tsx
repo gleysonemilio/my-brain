@@ -24,10 +24,14 @@ import {
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Document from '@tiptap/extension-document'
+import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 import TextStyle from '@tiptap/extension-text-style'
+import Youtube from '@tiptap/extension-youtube'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import css from 'highlight.js/lib/languages/css'
@@ -76,6 +80,15 @@ const Tiptap = () => {
       Color,
       TextStyle,
       Paragraph,
+      TaskList,
+      Highlight,
+      Youtube.configure({
+        controls: true,
+        nocookie: true
+      }),
+      TaskItem.configure({
+        nested: true
+      }),
       CodeBlockLowlight.configure({
         lowlight: createLowlight(common)
       }),
@@ -94,7 +107,7 @@ const Tiptap = () => {
     ],
     content: inforPage?.content,
     editorProps: {
-      attributes: { class: 'outline-none' }
+      attributes: { class: 'outline-none', spellcheck: 'false' }
     },
     onUpdate(editor: EditorInstance) {
       setNewPage(editor.editor.getHTML())
