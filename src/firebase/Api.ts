@@ -29,22 +29,21 @@ const provider = new GoogleAuthProvider()
 
 export interface UpdatePageInterface {
     id: string
-    idUser: string
+    idUser?: string
+    idPage?: string
     title: string
     subtitle?: string
     content?: string | null
     emoji?: string
+    tableDb: string
 }
 
-export interface UpdatePageInterface {
+export interface UpdateNamePageInterface {
     id: string
-    idPage: string
     title: string
-    subtitle?: string
-    content?: string | null
-    emoji?: string
+    emoji: string
+    tableDb: string
 }
-
 
 const signInWithPopupFirebase = async () => {
     await signInWithPopup(auth, provider).then((data) => {
@@ -146,7 +145,6 @@ const createSubPage = async ({ idPage, title, subtitle, emoji }: SubPagesInterfa
 
 const sharePageWirhFriend = async ({ idPage, idUser }: any) => {
     // if (!idUser || !idPage) return null
-    console.log('cheouuu brasikl')
     // await getAuth(firebaseapp).getUserByEmail('gleysonemilio@gmail.com')
     //     .then((userRecord) => {
     //         // See the UserRecord reference doc for the contents of userRecord.
@@ -173,13 +171,12 @@ const checkEmailExists = async (email: string) => {
     try {
         const authh = getAuth();
 
-
-        console.log('emai', email)
-        console.log('authh', authh)
+        // console.log('emai', email)
+        // console.log('authh', authh)
 
         const signInMethods = await fetchSignInMethodsForEmail(authh, 'gleysons@ciandt.com');
 
-        console.log('=>', signInMethods)
+        // console.log('=>', signInMethods)
         return signInMethods.length > 0; // Retorna true se o e-mail já estiver cadastrado
     } catch (error) {
         console.error("Erro ao verificar e-mail:", error);
@@ -211,34 +208,32 @@ async function updateUser(id: string, name: string, email: string) {
     })
 }
 
-const updatePageOfUser = async ({ id, idUser, title, subtitle, content }: UpdatePageInterface) => {
+const updatePage = async ({ id, idUser, idPage, title, subtitle, content, tableDb }: UpdatePageInterface) => {
     if (!content || !id) return null
 
-    const page = doc(db, 'page', id)
+    const page = doc(db, tableDb, id)
 
     await updateDoc(page, {
         content: content || null,
-        idUser: idUser || null,
         title: title || null,
-        subtitle: subtitle || null
+        subtitle: subtitle || null,
+        ...(idPage ? { idPage: idPage } : { idUser: idUser })
     })
 
     return page
 }
 
-const updateSubPage = async ({ id, idPage, title, subtitle, content }: UpdatePageInterface) => {
-    if (!content || !id) return null
+const updateNamePage = async ({ id, title, emoji, tableDb }: UpdateNamePageInterface) => {
+    if (!id && !title) return null
 
-    const page = doc(db, 'sub-page', id)
+    const page = doc(db, tableDb, id)
 
     await updateDoc(page, {
-        content: content || null,
-        idPage: idPage || null,
-        title: title || null,
-        subtitle: subtitle || null
+        title: title,
+        emoji: emoji
     })
 
     return page
 }
 
-export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, updatePageOfUser, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, updateSubPage, getPagesSharedByOtherUser, signInWithOutPopupFirebase, sharePageWirhFriend, checkEmailExists }
+export { getUser, createUser, deleterUser, updateUser, getPagesOfUser, getPageId, createPage, signInWithPopupFirebase, createSubPage, deleterPageOfUser, deleterSubPage, getSubPage, getPagesSharedByOtherUser, signInWithOutPopupFirebase, sharePageWirhFriend, checkEmailExists, updateNamePage, updatePage }
