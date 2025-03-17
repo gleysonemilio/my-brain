@@ -30,7 +30,7 @@ type AppContextProps = {
 
 const AppContext = createContext<AppContextProps>({} as AppContextProps)
 
-const defaultInforPage = {
+export const defaultInforPage = {
   id: '',
   idUser: '',
   title: '',
