@@ -23,7 +23,7 @@ export const ModalDeletePage = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <Button variant="secondary">
+        <Button variant="secondary" size="icon">
           <Trash color="#7b7b81" width={16} />
         </Button>
       </AlertDialogTrigger>
