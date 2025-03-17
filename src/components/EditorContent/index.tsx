@@ -1,18 +1,7 @@
 'use client'
 
-import { useAppContext } from '@/app/hooks/AppContext'
+import { defaultInforPage, useAppContext } from '@/app/hooks/AppContext'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger
-} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   deleterPageOfUser,
@@ -39,9 +28,11 @@ import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
 import { all, common, createLowlight } from 'lowlight'
-import { Trash, Users } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
+import { SubPagesInterface } from '../ModalCreateNewPage'
+import { ModalDeletePage } from '../ModalDeletePage'
 import { BubbleMenuComponents } from './BubbleMenu'
 import { FloatingMenuComponent } from './FloatingMenu'
 import './styles.css'
@@ -70,7 +61,7 @@ lowlight.register('js', js)
 lowlight.register('ts', ts)
 
 const Tiptap = () => {
-  const { inforPage, setPages, pages } = useAppContext()
+  const { inforPage, setPages, pages, setInforPage } = useAppContext()
   const [newPage, setNewPage] = useState<string>()
   const [needSave, setNeedSave] = useState<boolean>(false)
 
@@ -158,41 +149,28 @@ const Tiptap = () => {
 
   const deletePageOfUser = async () => {
     if (inforPage.idPage) {
-      return await deleterSubPage(inforPage.id as string)
+      await deleterSubPage(inforPage.id as string)
+
+      const newArray = pages.filter((element) => {
+        if (element.subPages) {
+          element.subPages = element.subPages.filter(
+            (ele: SubPagesInterface) => ele.id !== inforPage.id
+          )
+        }
+        return element
+      })
+
+      toast.success('Successfully Deleted')
+      setInforPage(defaultInforPage)
+      return setPages(newArray)
     }
     await deleterPageOfUser(inforPage.id as string)
 
     const newArray = pages.filter((element) => element.id !== inforPage.id)
 
+    setInforPage(defaultInforPage)
+    toast.success('Successfully Deleted')
     return setPages(newArray)
-  }
-
-  const ModalOpenDeletePage = () => {
-    return (
-      <AlertDialog>
-        <AlertDialogTrigger>
-          <Button variant="secondary">
-            <Trash color="#7b7b81" width={16} />
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Do you want to delete the page '{inforPage.title}' ? 😭
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This page will be permanently deleted if you click yes
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="w-full">
-            <AlertDialogCancel className="w-full">No</AlertDialogCancel>
-            <AlertDialogAction className="w-full" onClick={deletePageOfUser}>
-              Yes
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    )
   }
 
   useEffect(() => {
@@ -210,7 +188,7 @@ const Tiptap = () => {
         </h1>
 
         <div className="flex gap-1 absolute right-6 top-28">
-          <ModalOpenDeletePage />
+          <ModalDeletePage title={inforPage.title} ApiDeletePageOfUser={deletePageOfUser} />
         </div>
       </div>
 
