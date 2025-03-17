@@ -7,8 +7,8 @@ import {
   deleterPageOfUser,
   deleterSubPage,
   sharePageWirhFriend,
-  updatePageOfUser,
-  updateSubPage
+  updateNamePage,
+  updatePage
 } from '@/firebase/Api'
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
@@ -31,7 +31,7 @@ import { all, common, createLowlight } from 'lowlight'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-import { SubPagesInterface } from '../ModalCreateNewPage'
+import { ModalCreateNewPage, SubPagesInterface } from '../ModalCreateNewPage'
 import { ModalDeletePage } from '../ModalDeletePage'
 import { BubbleMenuComponents } from './BubbleMenu'
 import { FloatingMenuComponent } from './FloatingMenu'
@@ -108,69 +108,116 @@ const Tiptap = () => {
     }
   } as EditorOptions)
 
+  const updatePageData = async (tableDb: string, id: string) => {
+    await updatePage({
+      ...inforPage,
+      id,
+      content: newPage as string,
+      tableDb
+    })
+  }
+
   const upadatePage = async () => {
-    if (inforPage.idUser) {
-      await updatePageOfUser({
-        ...inforPage,
-        id: inforPage.id as string,
-        content: newPage as string
-      })
+    try {
+      if (inforPage.idUser) {
+        await updatePageData('page', inforPage.id as string)
 
-      setPages(
-        pages.map((ele) =>
-          ele.id === inforPage.id ? { ...inforPage, content: newPage as string } : ele
+        setPages(
+          pages.map((ele) =>
+            ele.id === inforPage.id ? { ...inforPage, content: newPage as string } : ele
+          )
         )
-      )
+      }
+
+      if (inforPage.idPage) {
+        await updatePageData('sub-page', inforPage.id as string)
+
+        const newArray = pages.map((ele) =>
+          ele.id === inforPage.idPage && ele.subPages
+            ? {
+                ...ele,
+                subPages: ele.subPages.map((subPage: any) =>
+                  subPage.id === inforPage.id
+                    ? { ...inforPage, content: newPage as string }
+                    : subPage
+                )
+              }
+            : ele
+        )
+
+        setPages(newArray)
+      }
+      toast.success('Successfully')
+      setNeedSave(false)
+    } catch (error) {
+      toast.error('Error')
     }
-
-    if (inforPage.idPage) {
-      await updateSubPage({
-        ...inforPage,
-        id: inforPage.id as string,
-        content: newPage as string
-      })
-
-      const newArray = pages.map((ele) =>
-        ele.id === inforPage.idPage && ele.subPages
-          ? {
-              ...ele,
-              subPages: ele.subPages.map((subPage: any) =>
-                subPage.id === inforPage.id ? { ...inforPage, content: newPage as string } : subPage
-              )
-            }
-          : ele
-      )
-
-      setPages(newArray)
-    }
-
-    setNeedSave(false)
   }
 
   const deletePageOfUser = async () => {
-    if (inforPage.idPage) {
-      await deleterSubPage(inforPage.id as string)
+    try {
+      if (inforPage.idPage) {
+        await deleterSubPage(inforPage.id as string)
 
-      const newArray = pages.filter((element) => {
-        if (element.subPages) {
-          element.subPages = element.subPages.filter(
-            (ele: SubPagesInterface) => ele.id !== inforPage.id
-          )
-        }
-        return element
-      })
+        const newArray = pages.filter((element) => {
+          if (element.subPages) {
+            element.subPages = element.subPages.filter(
+              (ele: SubPagesInterface) => ele.id !== inforPage.id
+            )
+          }
+          return element
+        })
+
+        toast.success('Successfully Deleted')
+        setInforPage(defaultInforPage)
+        return setPages(newArray)
+      }
+      await deleterPageOfUser(inforPage.id as string)
+
+      const newArray = pages.filter((element) => element.id !== inforPage.id)
+
+      setInforPage(defaultInforPage)
 
       toast.success('Successfully Deleted')
-      setInforPage(defaultInforPage)
       return setPages(newArray)
+    } catch (error) {
+      toast.error('Error')
     }
-    await deleterPageOfUser(inforPage.id as string)
+  }
 
-    const newArray = pages.filter((element) => element.id !== inforPage.id)
+  const upadatePageNameTitle = async (title: string, emoji: string) => {
+    try {
+      await updateNamePage({
+        id: inforPage.id as string,
+        title,
+        emoji,
+        tableDb: inforPage.idPage ? 'sub-page' : 'page'
+      })
 
-    setInforPage(defaultInforPage)
-    toast.success('Successfully Deleted')
-    return setPages(newArray)
+      const updateFunction = (ele: any) => ({ ...ele, title, emoji })
+
+      const updatedPages = pages.map((ele) => {
+        if (inforPage.idPage && ele.id === inforPage.idPage && ele.subPages) {
+          setInforPage(updateFunction(ele))
+          return {
+            ...ele,
+            subPages: ele.subPages.map((subPage: any) =>
+              subPage.id === inforPage.id ? updateFunction(subPage) : subPage
+            )
+          }
+        }
+        if (ele.id === inforPage.id) {
+          setInforPage(updateFunction(ele))
+          return updateFunction(ele)
+        }
+        return ele
+      })
+
+      setPages(updatedPages)
+      return toast.success(`Successfully Updated Name ${inforPage.idPage ? 'Sub Page' : 'Page'}`)
+    } catch (error) {
+      toast.error('Error')
+    }
   }
 
   useEffect(() => {
@@ -188,6 +235,12 @@ const Tiptap = () => {
         </h1>
 
         <div className="flex gap-1 absolute right-6 top-28">
+          <ModalCreateNewPage
+            isEdit
+            title="Edit Name Page"
+            value={{ title: inforPage.title, emoji: inforPage?.emoji }}
+            ApiCreatePage={(title: string, emoji: string) => upadatePageNameTitle(title, emoji)}
+          />
           <ModalDeletePage title={inforPage.title} ApiDeletePageOfUser={deletePageOfUser} />
         </div>
       </div>

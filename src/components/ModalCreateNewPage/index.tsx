@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { AlignJustify, FilePlus2, FilesIcon, Plus } from 'lucide-react'
+import { AlignJustify, FilePlus2, FilesIcon, Pencil, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export interface PagesInterface {
@@ -29,21 +29,38 @@ export interface SubPagesInterface {
 
 export const ModalCreateNewPage = ({
   title,
+  value,
+  isEdit,
   ApiCreatePage
 }: {
   title: string
-  ApiCreatePage: (title: any, emoji: any) => Promise<void>
+  isEdit?: boolean
+  ApiCreatePage: (title: string, emoji: string) => Promise<string | number | undefined | void>
+  value?: { title: string; emoji: string }
 }) => {
   const [emoji, setEmoji] = useState('')
   const [titleNewPage, setTitleNewPage] = useState<string>('')
   const [popoverOpen, setPopoverOpen] = useState(false)
 
+  useEffect(() => {
+    if (value && isEdit) {
+      setEmoji(value.emoji)
+      setTitleNewPage(value.title)
+    }
+  }, [isEdit, value?.emoji, value?.title])
+
   return (
     <Popover open={popoverOpen} onOpenChange={(e) => setPopoverOpen(e)}>
       <PopoverTrigger asChild>
-        <button>
-          <Plus color="#7b7b81" width={16} />
-        </button>
+        {isEdit ? (
+          <Button size="icon"variant="secondary" >
+            <Pencil color="#7b7b81" width={16} /> 
+          </Button>
+        ) : (
+          <button>
+            <Plus color="#7b7b81" width={16} />
+          </button>
+        )}
       </PopoverTrigger>
       <PopoverContent className="table w-80">
         <div className="grid gap-4">
@@ -58,8 +75,9 @@ export const ModalCreateNewPage = ({
               <span className="text-5xl">{emoji}</span>
               <Input
                 id="width"
-                className="h-8 w-[100%]"
                 placeholder="Title"
+                className="h-8 w-[100%]"
+                value={titleNewPage}
                 onChange={(e) => setTitleNewPage(e.target.value)}
               />
               <Button
