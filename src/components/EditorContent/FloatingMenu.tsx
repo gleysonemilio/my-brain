@@ -8,6 +8,7 @@ import {
   List,
   ListChecks,
   ListOrdered,
+  TextQuote,
   Youtube
 } from 'lucide-react'
 
@@ -63,7 +64,7 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       ActionButton: () => editor.chain().focus().toggleHeading({ level: 3 }).run()
     },
     {
-      icon: <Code2Icon color="#8d8d8d" />,
+      icon: <TextQuote color="#8d8d8d" />,
       title: 'Blockquote',
       subTitle: 'Create a simple Blockquote',
       isActive: 'blockquote',
