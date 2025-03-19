@@ -4,6 +4,7 @@ import {
   Heading1,
   Heading2,
   Heading3,
+  Image,
   List,
   ListChecks,
   ListOrdered,
@@ -25,6 +26,18 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
         height: Math.max(180, 250) || 480
       })
     }
+  }
+
+  const addImage = () => {
+    const url = window.prompt('URL')
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run()
+    }
+  }
+
+  if (!editor) {
+    return null
   }
 
   const floatingGoupItem = [
@@ -83,6 +96,13 @@ export const FloatingMenuComponent = ({ editor }: FloatingMenuInterface) => {
       subTitle: 'Create a link Youtube',
       isActive: 'youtube',
       ActionButton: () => addYoutubeVideo()
+    },
+    {
+      icon: <Image color="#8d8d8d" />,
+      title: 'Image',
+      subTitle: 'Create a link Image',
+      isActive: 'image',
+      ActionButton: () => addImage()
     }
   ]
 
