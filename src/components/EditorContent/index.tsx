@@ -14,6 +14,7 @@ import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Color } from '@tiptap/extension-color'
 import Document from '@tiptap/extension-document'
 import Highlight from '@tiptap/extension-highlight'
+import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
 import Paragraph from '@tiptap/extension-paragraph'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -30,6 +31,7 @@ import html from 'highlight.js/lib/languages/xml'
 import { all, common, createLowlight } from 'lowlight'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import ImageResize from 'tiptap-extension-resize-image'
 
 import { ModalCreateNewPage, SubPagesInterface } from '../ModalCreateNewPage'
 import { ModalDeletePage } from '../ModalDeletePage'
@@ -67,8 +69,10 @@ const Tiptap = () => {
 
   const editor = useEditor({
     extensions: [
-      Document,
       Color,
+      Image,
+      ImageResize,
+      Document,
       TextStyle,
       Paragraph,
       TaskList,
