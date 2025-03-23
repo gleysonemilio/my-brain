@@ -138,6 +138,18 @@ export const BubbleMenuComponents = ({ editor }: BubbleMenuComponents) => {
     {
       color: '#ffc83d',
       value: 'setYellow'
+    },
+    {
+      color: '#7CEA9C',
+      value: 'setGreen'
+    },
+    {
+      color: '#63B3ED',
+      value: 'setBlue'
+    },
+    {
+      color: '#FAD8D6',
+      value: 'setPink'
     }
   ]
 
