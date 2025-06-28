@@ -21,10 +21,11 @@ export default function Page() {
 
   function handleSubmit(e: any) {
     e.preventDefault()
-    const uid = e.target.email.value;
+    const uid = e.target.uid.value;
 
     if (uid) {
       setCookie('uid', uid)
+      console.log('login without account google', uid)
       return router.push('/my-book')
     }
   }
