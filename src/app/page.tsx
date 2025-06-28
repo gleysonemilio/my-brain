@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { setCookie } from 'cookies-next'
 
 export default function Page() {
   const router = useRouter()
@@ -20,9 +21,12 @@ export default function Page() {
 
   function handleSubmit(e: any) {
     e.preventDefault()
-    // signInApp()
+    const uid = e.target.email.value;
 
-    // router.push('/')
+    if (uid) {
+      setCookie('uid', uid)
+      return router.push('/my-book')
+    }
   }
 
   const handleSignLogin = async () => {
@@ -49,7 +53,11 @@ export default function Page() {
 
           <p className="px-8 text-center text-sm text-muted-foreground text-[#323234]">
             © developed by{' '}
-            <Link className=' animate-pulse' href="https://www.linkedin.com/in/gleysonsilva/" target="_blank">
+            <Link
+              className="animate-pulse"
+              href="https://www.linkedin.com/in/gleysonsilva/"
+              target="_blank"
+            >
               Gleyson
             </Link>{' '}
             this 2024
@@ -70,8 +78,8 @@ export default function Page() {
           </div>
 
           <form onSubmit={handleSubmit} className="grid w-full items-center gap-2">
-            <Input id="email" type="email" placeholder="name@example.com" />
-            <Button>Sign In with Email</Button>
+            <Input id="uid" type="text" placeholder="name@example.com" />
+            <Button>Sign In</Button>
           </form>
 
           <div className="flex w-full justify-center items-center gap-2 text-zinc-400">
