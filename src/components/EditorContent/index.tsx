@@ -232,7 +232,10 @@ const Tiptap = () => {
 
   return (
     <div>
-      <div className="h-20 rounded-lg bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-2xl">
+      <div
+        id="div_img"
+        className="h-20 rounded-lg shadow-2xl"
+      >
         <h1 className="absolute top-28 space-x-2 font-mono text-5xl uppercase">
           {inforPage?.emoji || ''}
           {inforPage.title}
